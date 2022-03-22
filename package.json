@@ -2,9 +2,9 @@
   "name": "covidtest",
   "version": "1.0.0",
   "description": "Sistema de gestion para pruebas covid en un laboratio.",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon server -e js,json,hbs"
+    "dev": "nodemon src/index.js -e js,json,hbs"
   },
   "repository": {
     "type": "git",
