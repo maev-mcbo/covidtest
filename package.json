@@ -1,0 +1,27 @@
+{
+  "name": "covidtest",
+  "version": "1.0.0",
+  "description": "Sistema de gestion para pruebas covid en un laboratio.",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server -e js,json,hbs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "covidtest"
+  },
+  "keywords": [
+    "covidtest"
+  ],
+  "author": "Mario Echeverria",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.3",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
