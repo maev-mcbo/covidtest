@@ -12,25 +12,9 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-light bg-dark fixed-top ">
-    <div class="container">
-      <a class="navbar-brand" href="#">
-        <img class='img-fluid' src="/assets/logo.jpg" alt="" width="50" height="50">
-      </a>
-    </div>
-  </nav>
-  <ul class="nav flex-column bg-dark v-nav fixed-top v-fill">
-    <li class="nav-item">
-      <a class="nav-link active" href="/user">Usuarios</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="auth/login">login</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="auth/logout">Logout</a>
-    </li>
-  </ul>
 
+  {{> Navbar}}
+  
   <div class="container mt-2 ps-5 pt-5">
 
     {{{body}}}

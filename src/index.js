@@ -13,12 +13,15 @@ const PORT = process.env.PORT || 5000
 
 const hbs = create({
     extname: '.hbs',
+    partialsDir: [
+        path.join(__dirname, 'views/components')
+    ],
 });
 
 // Middlewares
-app.use(morgan("dev"));
-app.use(express.json());
+//app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 //hbs
 app.engine('.hbs', hbs.engine);
