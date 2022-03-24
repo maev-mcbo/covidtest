@@ -1,14 +1,17 @@
-const express =  require("express");
+const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
-const {create} = require('express-handlebars');
-
+const { create } = require('express-handlebars');
+const dotenv = require('dotenv')
+require('./database/db')
 
 // Intializations
 const app = express();
+dotenv.config();
 
 // Settings
-app.set("port", 5000);
+const PORT = process.env.PORT || 5000
+
 const hbs = create({
     extname: '.hbs',
 });
@@ -37,5 +40,6 @@ app.use('/user', require('./routes/user'));
 // Public
 
 
-app.listen(app.get("port"));
-console.log("Servidor corriendo en el puerto:", app.get("port"));
+app.listen(PORT, () => {
+    console.log("Servidor corriendo en el puerto:", PORT);
+});
