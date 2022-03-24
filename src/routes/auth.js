@@ -1,16 +1,14 @@
-const fs = require('fs');
-
 const { Router } = require('express')
 router = Router();
 
 
 router.get('/login', (req, res) => {
-    res.send('hola desde login');
+    res.render('login');
 
 })
 
-router.get('/logout', (req, res) => {
-    res.send('hola desde logout');
+router.post('/form', (req, res) => {
+    res.json(req.body);
 })
 
 router.get('/singout', (req, res) => {
