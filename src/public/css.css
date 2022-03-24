@@ -1,0 +1,7 @@
+.v-nav{
+    width:fit-content;
+    margin-top: 50px;
+}
+.v-fill{
+    height: -webkit-fill-available
+}

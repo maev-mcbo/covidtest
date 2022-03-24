@@ -4,7 +4,7 @@
   "description": "Sistema de gestion para pruebas covid en un laboratio.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js -e js,json,hbs"
+    "dev": "nodemon src/index.js -e js,json,hbs,html"
   },
   "repository": {
     "type": "git",
