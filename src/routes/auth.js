@@ -1,14 +1,20 @@
 const { Router } = require('express')
 router = Router();
+const {
+    loginOperatorForm,
+    registerOperatorFrom,
+    registerOperatorProcess,
+    loginOperatorProcess,
+    confirmaccountprocess
+} = require('../controllers/authController')
 
 
-router.get('/login', (req, res) => {
-    res.render('login');
-})
+router.get('/login', loginOperatorForm)
+router.post('/login',loginOperatorProcess)
 
-router.post('/form', (req, res) => {
-    res.json(req.body);
-})
+router.get('/singup', registerOperatorFrom)
+router.post('/singup',registerOperatorProcess)
+router.get('/confirmaccount/:tokenConfirm',confirmaccountprocess )
 
 router.get('/logout', (req, res) => {
     res.render('logout');
