@@ -1,25 +1,37 @@
 const operator = require("../models/operators")
 const {nanoid} = require('nanoid')
-const { isStream } = require("tar/lib/read-entry")
+const {validationResult} = require('express-validator')
+
+
 
 const loginOperatorForm = (req, res) => {
-    res.render('login')
+    res.render('login', {mensajes: req.flash("mensajes")})
 }
 
 
 const loginOperatorProcess = async (req, res) => {
+    
+    const errors= validationResult(req)
+    if(!errors.isEmpty()){
+        req.flash('mensajes', errors.array())
+        return res.redirect('login')
+    }
+    
     const {mail, password} =req.body
     console.log('la contraseña es: ' +password )
     try {
         
         const user = await operator.findOne({mail})
         if(!user) throw Error('El ususario no existe')
-        if(!user.accountConfirm) throw Error('falta confirmar cuenta')
+        if(!user.accountConfirm) throw Error('Por favor, revise su correo para activar la cuenta.')
         if(!await user.comparePassword(password))throw Error('constraseña invalida')
         res.redirect('/')
 
     } catch (error) {
-        res.send(error.message  )
+
+        req.flash('mensajes', [{msg: error.message}])
+        return res.redirect('login')
+       
     }
 
 }
@@ -27,16 +39,22 @@ const loginOperatorProcess = async (req, res) => {
 
 
 const registerOperatorFrom = (req, res) => {
-    res.render('registerOperator')
+    res.render('registerOperator', {mensajes: req.flash("mensajes")})
 }
 
 
 const registerOperatorProcess = async (req, res) => {
 
+    const errors= validationResult(req)
+    if(!errors.isEmpty()){
+        req.flash('mensajes', errors.array())
+        return res.redirect('singup')
+    }
+
     const { username,
             mail,
             password } = req.body
-  
+    
         try {
         let existOperator = await operator.findOne({ mail })
         if (existOperator) throw Error('Ya existe este usuario')
@@ -44,11 +62,12 @@ const registerOperatorProcess = async (req, res) => {
         const newOperator = new operator({ username, mail, password, tokenConfirm: nanoid()})
         await newOperator.save()
         console.log(existOperator)
-        res.redirect('login')
+        res.redirect('login' )
 
 
     } catch (error) {
-        console.log('error' + error)
+        req.flash('mensajes', [{msg: error.message}])
+        return res.redirect('singup')
     }
 
 

@@ -1,13 +1,11 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-10 offset-md-1">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
       <h1>Listado de Usuarios</h1>
 
       <div class="card border-secondary mb-3">
-        <div class="card-header">Cliente {{this.id}} 
-          <div class="text-right" style="
-    display: inline-flex;
-    float: right;">
+        <div class="card-header">Cliente {{this.id}}
+          <div class="text-right" style="display: inline-flex; float: right;">
             <a href="user/deleteUser/{{this._id}}" type="button" class="btn btn-danger">Eliminar</a>
             <a href="user/updateUser/{{this._id}}" type="button" class="btn btn-warning">Editar</a>
           </div>
@@ -24,7 +22,7 @@
           <p>{{this.mail}}</p>
           <p class="card-subtitle fw-bolder">Cliente creado:</p>
           <p>{{this.createdAt}}</p>
-          
+
         </div>
       </div>
     </div>

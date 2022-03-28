@@ -1,5 +1,7 @@
 const { findByIdAndDelete, findById } = require('../models/users');
+const { validationResult } = require('express-validator')
 const userSchema = require('../models/users')
+
 
 const readUsers = async (req, res) => {
 
@@ -11,8 +13,18 @@ const readUsers = async (req, res) => {
     }
 }
 
-const addUser = async (req, res) => {
+const addUserForm = (req, res) => {
+    res.render('addUser', { mensajes: req.flash("mensajes") })
+}
 
+const addUserProcess = async (req, res) => {
+
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        req.flash('mensajes', errors.array())
+        return res.redirect('adduser')
+    }
+    console.log('111111111111111111')
     const data = {
         fname,
         lname,
@@ -21,23 +33,23 @@ const addUser = async (req, res) => {
         passport,
     } = (req.body)
 
-    if (Object.keys(data).length === 0) {
-        res.send('No hay datos para agregar')
-    } else {
-        try {
-            const newuser = new userSchema(data)
-            console.log(newuser)
-            await newuser.save()
-            res.redirect('/user')
-            console.log('USUARIO AGREGADO A LA BASE DE DATOS')
-            // TODO https://mongoosejs.com/docs/4.x/docs/validation.html
-        } catch (error) {
-            console.log('error ' + error)
-        }
+    try {
+        const newuser = new userSchema(data)
+        await newuser.save()
+        res.redirect('/user')
+
+        // TODO https://mongoosejs.com/docs/4.x/docs/validation.html
+
+    } catch (error) {
+        console.log('entra en el catch')
+        req.flash('mensajes', [{ msg: error.message }])
+        return res.redirect('addUser')
     }
-    console.log(req.body)
-    res.render('adduser')
+
+
+
 }
+
 
 const deleteUser = async (req, res) => {
     const { id } = req.params
@@ -48,6 +60,10 @@ const deleteUser = async (req, res) => {
     } catch (error) {
         console.log('error ' + error)
     }
+}
+
+const updateUserForm = (req, res) => {
+    res.render('updateuser')
 }
 
 const updateUser = async (req, res) => {
@@ -71,7 +87,9 @@ const updateUser = async (req, res) => {
 
 module.exports = {
     readUsers,
-    addUser,
+    addUserProcess,
     deleteUser,
-    updateUser
+    updateUser,
+    addUserForm,
+    updateUserForm
 }

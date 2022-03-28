@@ -3,8 +3,9 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const morgan = require("morgan");
 const path = require("path");
+const passport = require('passport')
 const { create } = require('express-handlebars');
-const dotenv =require('dotenv').config()
+const dotenv = require('dotenv').config()
 require('./database/db')
 
 // Intializations
@@ -16,6 +17,16 @@ app.use(session({
     saveUninitialize: false,
     name: 'mi-frase-secreta',
 }))
+
+app.use(flash())
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+passport.serializeUser((user, done) =>done(null, {id: user.username, mail: user.mail}) )
+passport.deserializeUser((user, done) =>{
+    return done(null, user)
+})
 
 // Settings
 const PORT = process.env.PORT || 5000
@@ -42,6 +53,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use('/', require('./routes'));
 app.use('/auth', require('./routes/auth'));
 app.use('/user', require('./routes/user'));
+app.use('/order',require('./routes/order'))
 
 
 
