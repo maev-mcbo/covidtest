@@ -30,7 +30,7 @@ passport.serializeUser((user, done) =>done(null, {id: user._id, mail: user.usern
 passport.deserializeUser( async(user, done) =>{
 
 const userdb = await operator.findById(user.id)
-    console.log('usuario encontrado: '+  userdb)
+    //console.log('usuario encontrado: '+  userdb)
     return done(null, {id: userdb._id, mail: user.username})
 })
 
@@ -42,20 +42,25 @@ const hbs = create({
     partialsDir: [
         path.join(__dirname, 'views/components')
     ],
+    helpers: {
+       ifEquals: function(arg1, arg2, options) {
+            return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+        }
+    }
 });
 
 // Middlewares
 //app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 
-app.use(csrf());
-app.use( (req,res,next) => {
-    res.locals.csrfToken = req.csrfToken();
-    res.locals.mensajes = req.flash('mensajes');
-    return next()
-});
 
 app.use(express.json());
+app.use(csrf());
+app.use( (req,res,next) => {
+  res.locals.csrfToken = req.csrfToken();
+  res.locals.mensajes = req.flash('mensajes');
+   return next()
+});
 //hbs
 app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');

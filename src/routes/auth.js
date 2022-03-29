@@ -1,7 +1,7 @@
 const { Router } = require('express')
 router = Router();
 const { body } = require('express-validator');
-const req = require('express/lib/request');
+
 const {
     loginOperatorForm,
     registerOperatorFrom,

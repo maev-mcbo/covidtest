@@ -1,4 +1,3 @@
-const { findByIdAndDelete, findById } = require('../models/users');
 const { validationResult } = require('express-validator')
 const userSchema = require('../models/users')
 

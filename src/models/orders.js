@@ -1,52 +1,83 @@
 const mongoose = require('mongoose')
-const {Schema} = mongoose
+const { Schema } = mongoose
 
 const ordersSchema = new Schema({
-    fname:{
+    fname: {
         type: String,
         require: true
     },
-    lname:{
+    lname: {
         type: String,
         require: true
     },
-    personalID:{ type: String,
-        require: true},
+    personalID: {
+        type: String,
+        require: true
+    },
 
-    phone:{
+    phone: {
         type: String,
         require: true
     },
-    gender:{
+    gender: {
         type: String,
         require: true
     },
-    mail:{
+    mail: {
         type: String,
         require: true
     },
-    passport:{
+    passport: {
         type: String,
         require: true
     },
-    bornCountr:{ type: String,
-        require: true},
-    address:{ type: String,
-        require: true},
-    testtype:{ type: String,
-        require: true},
-    originF:{ type: String,
-        require: true},
-    destf:{ type: String,
-        require: true},
-    airline:{ type: String,
-        require: true},
-    idf:{ type: String,
-        require: true},
-    departuredate:{ type: String,
-        require: true},
-    arrivaldate:{ type: String,
-        require: true},
+    bornCountr: {
+        type: String,
+        require: true
+    },
+    address: {
+        type: String,
+        require: true
+    },
+    testtype: {
+        type: String,
+        require: true
+    },
+    originF: {
+        type: String,
+        require: true
+    },
+    destf: {
+        type: String,
+        require: true
+    },
+    airline: {
+        type: String,
+        require: true
+    },
+    idf: {
+        type: String,
+        require: true
+    },
+    departuredate: {
+        type: String,
+        require: true
+    },
+    arrivaldate: {
+        type: String,
+        require: true
+    },
+    paymentStatus: {
+        type: String,
+        require: true,
+        default: "pendiente"
+
+    },
+    testresult: {
+        type: String,
+        require: true,
+        default: "pendiente"
+    },
 
 }, {
     timestamps: true
