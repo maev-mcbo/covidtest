@@ -1,11 +1,13 @@
 const operator = require("../models/operators")
 const {nanoid} = require('nanoid')
 const {validationResult} = require('express-validator')
+const nodemailer = require('nodemailer')
+require('dotenv')
 
 
 
 const loginOperatorForm = (req, res) => {
-    res.render('login', {mensajes: req.flash("mensajes")})
+    res.render('login' )
 }
 
 
@@ -18,14 +20,21 @@ const loginOperatorProcess = async (req, res) => {
     }
     
     const {mail, password} =req.body
-    console.log('la contraseña es: ' +password )
+   // console.log('la contraseña es: ' +password )
     try {
         
         const user = await operator.findOne({mail})
+        console.log('EL USUARIO ES: ' + user)
         if(!user) throw Error('El ususario no existe')
         if(!user.accountConfirm) throw Error('Por favor, revise su correo para activar la cuenta.')
         if(!await user.comparePassword(password))throw Error('constraseña invalida')
-        res.redirect('/')
+        console.log('estoy en el catch')
+        
+        // crea la sesion del usuario 
+        req.login(user, function(error){
+            if (error) throw new Error('Error al crear la sesion')
+            return res.redirect('/')
+        })
 
     } catch (error) {
 
@@ -33,13 +42,13 @@ const loginOperatorProcess = async (req, res) => {
         return res.redirect('login')
        
     }
-
+   
 }
 
 
 
 const registerOperatorFrom = (req, res) => {
-    res.render('registerOperator', {mensajes: req.flash("mensajes")})
+    res.render('registerOperator')
 }
 
 
@@ -51,6 +60,15 @@ const registerOperatorProcess = async (req, res) => {
         return res.redirect('singup')
     }
 
+    const transport = nodemailer.createTransport({
+        host: "smtp.mailtrap.io",
+        port: 25,
+        auth: {
+          user: "f5f3b1819cd6f7", // generated ethereal user
+          pass: "c6dec2891033f7", // generated ethereal password
+        },
+      });
+
     const { username,
             mail,
             password } = req.body
@@ -60,14 +78,25 @@ const registerOperatorProcess = async (req, res) => {
         if (existOperator) throw Error('Ya existe este usuario')
 
         const newOperator = new operator({ username, mail, password, tokenConfirm: nanoid()})
+        console.log( 'A ESTE CORREO SE VA A ENVIAR LA CONFIRMACION    '+ newOperator.mail)
         await newOperator.save()
-        console.log(existOperator)
+        
+        
+        const info = await transport.sendMail({
+            from:'hs',
+            to: newOperator.mail,
+            subject: 'activa tu cuenta',
+            html: `<a href="${process.env.CONFIRMACCOUNT + newOperator.tokenConfirm}"> Verifica tu cuenta aqui</a>`
+        });
+        console.log("Message sent: %s", info.messageId);
+
+
         res.redirect('login' )
 
 
     } catch (error) {
-        req.flash('mensajes', [{msg: error.message}])
-        return res.redirect('singup')
+        req.flash('mensajes', [{ msg: error.message }])
+        return res.redirect('login')
     }
 
 
@@ -84,7 +113,8 @@ const confirmaccountprocess = async(req,res) =>{
         tokenConfirmExist.tokenConfirm = null
 
         await tokenConfirmExist.save()
-        res.json( tokenConfirmExist)
+        req.flash('mensajes', [{msg: 'Cuenta verificada, puede iniciar sesion'}])
+        res.redirect('login')
     } catch (error) {
         console.log('error' + error)        
         res.json({msg: "no existe este usuario"})
@@ -94,11 +124,17 @@ const confirmaccountprocess = async(req,res) =>{
 
 }
 
+const logoutProcess = (req, res) => { 
+    req.logout()
+    return res.redirect('/auth/login')
+}
+
 
 module.exports = {
     loginOperatorForm,
     loginOperatorProcess,
     registerOperatorFrom,
     registerOperatorProcess,
-    confirmaccountprocess
+    confirmaccountprocess,
+    logoutProcess
 }

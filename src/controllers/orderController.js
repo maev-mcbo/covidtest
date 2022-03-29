@@ -21,6 +21,17 @@ const orderFromProcess = async(req, res)=> {
 
 
 }
+const readorders = async(req,res) =>{
+ 
+
+    try {
+        const orders = await Order.find().lean();
+        res.render('orderlist', { orders });
+    } catch (error) {
+        console.log('error ' + error)
+    }
+
+}
 
 
 
@@ -28,5 +39,6 @@ const orderFromProcess = async(req, res)=> {
 module.exports = {
     orderFrom,
     orderFromProcess,
+    readorders
     
 }

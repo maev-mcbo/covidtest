@@ -2,7 +2,7 @@ const { Router } = require('express')
 router = Router();
 
 router.get('/', (req, res) => {
-     res.json(req.session.usuario || 'sin sesion');
+     res.redirect('/order/orderlist');
 });
 
 router.get('/cs', (req, res) => {

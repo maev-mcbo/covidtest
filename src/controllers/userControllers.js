@@ -14,7 +14,7 @@ const readUsers = async (req, res) => {
 }
 
 const addUserForm = (req, res) => {
-    res.render('addUser', { mensajes: req.flash("mensajes") })
+    res.render('addUser')
 }
 
 const addUserProcess = async (req, res) => {

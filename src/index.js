@@ -3,9 +3,11 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const morgan = require("morgan");
 const path = require("path");
+const operator = require('./models/operators')
 const passport = require('passport')
 const { create } = require('express-handlebars');
-const dotenv = require('dotenv').config()
+const csrf = require('csurf');
+require('dotenv').config()
 require('./database/db')
 
 // Intializations
@@ -23,9 +25,13 @@ app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 
-passport.serializeUser((user, done) =>done(null, {id: user.username, mail: user.mail}) )
-passport.deserializeUser((user, done) =>{
-    return done(null, user)
+passport.serializeUser((user, done) =>done(null, {id: user._id, mail: user.username}) 
+);
+passport.deserializeUser( async(user, done) =>{
+
+const userdb = await operator.findById(user.id)
+    console.log('usuario encontrado: '+  userdb)
+    return done(null, {id: userdb._id, mail: user.username})
 })
 
 // Settings
@@ -39,10 +45,17 @@ const hbs = create({
 });
 
 // Middlewares
-app.use(morgan("dev"));
+//app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
+app.use(csrf());
+app.use( (req,res,next) => {
+    res.locals.csrfToken = req.csrfToken();
+    res.locals.mensajes = req.flash('mensajes');
+    return next()
+});
+
+app.use(express.json());
 //hbs
 app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');

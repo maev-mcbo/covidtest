@@ -1,55 +1,31 @@
-<nav class="navbar navbar-light bg-dark  ">
-    <div class="container">
-      <a class="navbar-brand" href="/">
-        <img class='img-fluid' src="/assets/logo.jpg" alt="" width="50" height="50">
-      </a>
-          <li class="nav-item">
-      <a class="nav-link active" href="/user">Usuarios</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link active" href="/user/adduser">Agregar</a>
-    </li>
-        <li class="nav-item">
-      <a class="nav-link active" href="/order">Agregar Ordenes</a>
-    </li>
-     <li class="nav-item">
-      <a class="nav-link" href="/auth/singup">Singup</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/auth/login">login</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/auth/logout">Logout</a>
-    </li>
-    </div>
-  </nav>
- 
-
- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-light bg-light p-3">
+  <a class="navbar-brand" href="/"> <img class='img-fluid' src="/assets/logo.jpg" alt="" width="50" height="50"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/user"> Lista de Usuarios</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
+        <a class="nav-link" href="/user/adduser">Agregar Usuarios</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
+        <a class="nav-link" href="/order">Agregar Ordenes</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown link
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
+      <li class="nav-item">
+        <a class="nav-link" href="/order/orderlist"> Bandeja de ordenes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/auth/singup">Singup</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/auth/login">login</a>
+      </li>
+      <li class="nav-item">
+       <a class="nav-link" href="/auth/logout">Logout</a>
       </li>
     </ul>
   </div>

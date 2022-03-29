@@ -3,6 +3,7 @@
         <div class="col-md-8">
       <h1>Agregar Usuario</h1>
       <form action="http://127.0.0.1:5000/user/adduser" method="post">
+       <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <div class="mb-3 form-control">
           <label for="fname" class="form-label">Nombre:</label>
           <input type="text" class="form-control" name="fname" id="" aria-describedby="help-fname" placeholder="">

@@ -7,7 +7,8 @@ const {
     registerOperatorFrom,
     registerOperatorProcess,
     loginOperatorProcess,
-    confirmaccountprocess
+    confirmaccountprocess,
+    logoutProcess
 } = require('../controllers/authController')
 
 
@@ -27,6 +28,7 @@ router.post('/login',[
 ],loginOperatorProcess)
 
 router.get('/singup', registerOperatorFrom)
+
 router.post('/singup',[
     body('username', 'Favor verificar usuario')
         .trim()
@@ -52,10 +54,9 @@ router.post('/singup',[
             }
         })
 ],registerOperatorProcess)
+
 router.get('/confirmaccount/:tokenConfirm',confirmaccountprocess )
 
-router.get('/logout', (req, res) => {
-    res.render('logout');
-})
+router.get('/logout',logoutProcess)
 
 module.exports = router

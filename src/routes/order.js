@@ -1,11 +1,15 @@
 const { Router } =require('express')
 const {body} = require('express-validator');
-const { orderFrom, orderFromProcess } = require('../controllers/orderController');
+const { orderFrom, 
+    orderFromProcess,
+    readorders } = require('../controllers/orderController');
+const userisvalid = require('../middlewares/userisvalid');
 
 router = Router();
 
-router.get('/', orderFrom)
-router.post('/', orderFromProcess)
+router.get('/', userisvalid,orderFrom)
+router.post('/',userisvalid, orderFromProcess)
+router.get('/orderlist', userisvalid, readorders)
 
 
 module.exports = router;
