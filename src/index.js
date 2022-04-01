@@ -54,9 +54,9 @@ app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-//app.use(csrf());
+app.use(csrf());
 app.use( (req,res,next) => {
-//  res.locals.csrfToken = req.csrfToken();
+  res.locals.csrfToken = req.csrfToken();
   res.locals.mensajes = req.flash('mensajes');
    return next()
 });
