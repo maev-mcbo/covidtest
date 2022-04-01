@@ -5,13 +5,14 @@ const { orderFrom,
     OrderDetailView,
     readOrders,
     deleteOrder,
-    covidResultProcess } = require('../controllers/orderController');
+    covidResultProcess,
+    scanprocess } = require('../controllers/orderController');
 const userisvalid = require('../middlewares/userisvalid');
 
 router = Router();
 
-router.get('/', userisvalid, orderFrom)
-router.post('/', userisvalid, [
+router.get('/',  orderFrom)
+router.post('/', [
     body("fname", "").isLength({ min: 3 }),
     body("lname", "").isLength({ min: 3 }),
     body("personalID", "").isNumeric(),
@@ -29,14 +30,15 @@ router.post('/', userisvalid, [
     body("departuredate ", "").notEmpty(),
     body("arrivaldate ", "").notEmpty(),], orderFromProcess)
 
-router.get('/orderlist', userisvalid, readOrders)
+router.get('/orderlist',  readOrders)
 
-router.get('/orderdetail/:orderid', userisvalid, OrderDetailView)
+router.get('/orderdetail/:orderid',  OrderDetailView)
 
-router.get('/deleteorder/:orderid',userisvalid, deleteOrder);
+router.get('/deleteorder/:orderid', deleteOrder);
 
-router.post('/covidresult',userisvalid, covidResultProcess);
+router.post('/covidresult/:id', covidResultProcess);
 
+router.get('/scan/:id', scanprocess);
 
 module.exports = router;
 

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const qr = require("qrcode")
 const { Schema } = mongoose
 
 const ordersSchema = new Schema({
@@ -78,10 +79,22 @@ const ordersSchema = new Schema({
         require: true,
         default: "pendiente"
     },
+    qr: {
+        type: String,
+       default: null 
+    },
+    dob: {
+        type: String,
+       default: null 
+    },
 
 }, {
     timestamps: true
 })
+
+
+
+
 
 const Order = mongoose.model('order', ordersSchema);
 module.exports = Order

@@ -84,11 +84,14 @@ const updateUser = async (req, res) => {
     }
 }
 
+
+
 module.exports = {
     readUsers,
     addUserProcess,
     deleteUser,
     updateUser,
     addUserForm,
-    updateUserForm
+    updateUserForm,
+    
 }
