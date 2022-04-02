@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const clientDB = mongoose
 
-.connect(process.env.URI) 
+.connect(`${process.env.URI}`) 
     .then((m) => {
         console.log('Conectado a la Base de Datos ')
         return m.connection.getClient();
