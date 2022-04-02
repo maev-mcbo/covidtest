@@ -13,7 +13,7 @@ const readUsers = async (req, res) => {
 }
 
 const addUserForm = (req, res) => {
-    res.render('/adduser')
+    res.render('adduser')
 }
 
 const addUserProcess = async (req, res) => {
