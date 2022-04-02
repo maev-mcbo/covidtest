@@ -21,7 +21,7 @@ const addUserProcess = async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         req.flash('mensajes', errors.array())
-        return res.redirect('adduser')
+        return res.redirect('/adduser')
     }
     console.log('111111111111111111')
     const data = {
