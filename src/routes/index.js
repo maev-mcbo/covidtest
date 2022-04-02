@@ -2,7 +2,7 @@ const { Router } = require('express')
 router = Router();
 
 router.get('/', (req, res) => {
-     res.redirect('/order/orderlist');
+     res.redirect('/auth/singup');
 });
 
 router.get('/cs', (req, res) => {
