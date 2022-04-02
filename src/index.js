@@ -17,13 +17,12 @@ const app = express();
 
 app.set("trust proxy", 1);
 app.use(session({
-    secret: process.env.SESSIONSECRET,
+    secret: `${process.env.SESSIONSECRET}`,
     resave: false,
     saveUninitialize: false,
     name: 'mi-frase-secreta',
     store: MongoStore.create({
         clientPromise: clientDB,
-      
     }),
     cookie: { secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 },
 }))
