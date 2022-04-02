@@ -6,39 +6,41 @@ const { orderFrom,
     readOrders,
     deleteOrder,
     covidResultProcess,
-    scanprocess } = require('../controllers/orderController');
+    scanprocess,
+    paymentprocess   } = require('../controllers/orderController');
 const userisvalid = require('../middlewares/userisvalid');
 
 router = Router();
 
-router.get('/',  orderFrom)
+router.get('/', userisvalid, orderFrom)
 router.post('/', [
-    body("fname", "").isLength({ min: 3 }),
-    body("lname", "").isLength({ min: 3 }),
-    body("personalID", "").isNumeric(),
-    body("phone", "").notEmpty().isMobilePhone("any"),
-    body("gender", "").notEmpty(),
-    body("mail", "").notEmpty().isEmail(),
-    body("passport ", "").notEmpty(),
-    body("bornCountr ", "").notEmpty(),
-    body("address ", "").notEmpty(),
-    body("testtype ", "").notEmpty(),
-    body("originF ", "").notEmpty(),
-    body("destf ", "").notEmpty(),
-    body("airline ", "").notEmpty(),
-    body("idf ", "").notEmpty(),
-    body("departuredate ", "").notEmpty(),
-    body("arrivaldate ", "").notEmpty(),], orderFromProcess)
+    body("fname", "Minimo 3 caracteres").isLength({ min: 3 }),
+    body("lname", "Minimo 3 caracteres").isLength({ min: 3 }),
+    body("personalID", "Cedula invalida").isNumeric(),
+    body("phone", "telefono invalido").notEmpty().isMobilePhone("any"),
+    body("gender", "Genero vacio").notEmpty(),
+    body("mail", "No es un correo").notEmpty().isEmail(),
+    body("passport ", "Pasaporte no puede estar vacio").notEmpty(),
+    body("bornCountr ", "fecha no puede estar vacia").notEmpty(),
+    body("address ", "Direccion no puede estar vacia").notEmpty(),
+    body("testtype ", "Debe seleccionar un tipo de prueba").notEmpty(),
+    body("originF ", "El pais de origen no puede estar vacio").notEmpty(),
+    body("destf ", "El pais de destino no puede estar vacio").notEmpty(),
+    body("airline ", "Seleccione una Aerolinea").notEmpty(),
+    body("idf ", "Numero de vuelo no puede estar vacio").notEmpty(),
+    body("departuredate ", "Seleccione una fecha de salida").notEmpty(),
+    body("arrivaldate ", "Seleccione una fecha de llegada").notEmpty(),], orderFromProcess)
 
-router.get('/orderlist',  readOrders)
+router.get('/orderlist',userisvalid,  readOrders)
 
-router.get('/orderdetail/:orderid',  OrderDetailView)
+router.get('/orderdetail/:orderid',userisvalid,  OrderDetailView)
 
-router.get('/deleteorder/:orderid', deleteOrder);
+router.get('/deleteorder/:orderid',userisvalid, deleteOrder);
 
-router.post('/covidresult/:id', covidResultProcess);
+router.post('/covidresult/:id',userisvalid, covidResultProcess);
 
 router.get('/scan/:id', scanprocess);
+router.post('/payment/:id',userisvalid, paymentprocess);
 
 module.exports = router;
 

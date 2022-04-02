@@ -1,5 +1,20 @@
+{{#if orders}}
     <h1>Bandeja de ordenes</h1>
+    {{#each orders }}
+        {{> Order}}
+        <a id="neworder" href="/order"><i  class="fa-solid fa-plus"> </i> Nueva Orden </a>
 
-{{#each orders }}
-    {{> Order}}
-{{/each}}
+    {{/each}}
+{{else}}
+
+<div class="container">
+    <div class="row justify-content-center aligh-items-center">
+    <div class="col-6">    
+    <h1> No hay ordenes, puedes crear una  pulsando aqui.  </h1>
+    <a id="neworder1" href="/order"><i  class="fa-solid fa-plus"> </i> Crear orden </a>
+    </div>
+    </div>
+</div>
+
+{{/if}}
+

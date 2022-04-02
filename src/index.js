@@ -1,29 +1,45 @@
 const express = require("express");
+const MongoStore = require('connect-mongo')
 const session = require('express-session')
 const flash = require('connect-flash')
 const morgan = require("morgan");
+const cors = require("cors");
+const mongoSanitize = require("express-mongo-sanitize");
 const path = require("path");
 const operator = require('./models/operators')
 const passport = require('passport')
 const { create } = require('express-handlebars');
 const csrf = require('csurf');
 require('dotenv').config()
-require('./database/db')
-
+const clientDB = require('./database/db')
 // Intializations
 const app = express();
 
+app.set("trust proxy", 1);
 app.use(session({
-    secret: '311ef93b7430166dbf9ddcf313e107f1f8b062845eb6c6492a52d622a51777c1',
+    secret: process.env.SESSIONSECRET,
     resave: false,
     saveUninitialize: false,
     name: 'mi-frase-secreta',
+    store: MongoStore.create({
+        clientPromise: clientDB,
+        dbName: "coviddb"
+    }),
+    cookie: { secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 },
 }))
 
 app.use(flash())
-
+app.use(mongoSanitize());
 app.use(passport.initialize())
 app.use(passport.session())
+
+
+const corsOptions = {
+    credentials: true,
+    origin: process.env.HEROPATH
+};
+app.use(cors(corsOptions));
+
 
 passport.serializeUser((user, done) =>done(null, {id: user._id, mail: user.username}) 
 );
@@ -50,7 +66,7 @@ const hbs = create({
 });
 
 // Middlewares
-app.use(morgan("dev"));
+//app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -60,6 +76,9 @@ app.use( (req,res,next) => {
   res.locals.mensajes = req.flash('mensajes');
    return next()
 });
+
+
+
 //hbs
 app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');

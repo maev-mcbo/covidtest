@@ -71,8 +71,12 @@ const ordersSchema = new Schema({
     paymentStatus: {
         type: String,
         require: true,
-        default: "pendiente"
-
+        default: null
+    },
+    paymenteAmaunt: {
+        type: Number,
+        require: true,
+        default: null
     },
     testresult: {
         type: String,
