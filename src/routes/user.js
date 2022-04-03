@@ -11,9 +11,9 @@ const {readUsers,
         updateUserForm
     } = require('../controllers/userControllers');
 
-router.get('/', readUsers);
+router.get('/',userisvalid, readUsers);
 
-router.get('/adduser',addUserForm);
+router.get('/adduser', userisvalid, addUserForm);
 router.post('/adduser',[
     body("fname","Nombre invalido").trim().isLength({min: 3}),
     body("lname",'Apellido invalido').trim().isLength({min: 3}),
@@ -22,9 +22,9 @@ router.post('/adduser',[
     body("passport",'Pasaporte no puede estar vacio.').notEmpty().trim()
 ],addUserProcess);
 
-router.get('/deleteUser/:id', deleteUser);
-router.get('/updateUser/:id', updateUserForm);
-router.post('/updateuser/:id', updateUser);
+router.get('/deleteUser/:id',userisvalid, deleteUser);
+router.get('/updateUser/:id',userisvalid, updateUserForm);
+router.post('/updateuser/:id',userisvalid, updateUser);
 
 
 
