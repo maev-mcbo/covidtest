@@ -24,10 +24,18 @@ app.use(session({
     store: MongoStore.create({
         clientPromise: clientDB,
     }),
-    cookie: { secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 },
+    //cookie: { secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 },
 }))
 
 app.use(flash())
+//app.use(csrf());
+app.use( (req,res,next) => {
+//    res.locals.csrfToken = req.csrfToken();
+    res.locals.mensajes = req.flash('mensajes');
+     return next()
+  });
+  
+
 app.use(mongoSanitize());
 app.use(passport.initialize())
 app.use(passport.session())
@@ -35,7 +43,7 @@ app.use(passport.session())
 
 const corsOptions = {
     credentials: true,
-    origin: process.env.HEROPATH
+    origin: process.env.HEROPATH 
 };
 app.use(cors(corsOptions));
 
@@ -65,16 +73,10 @@ const hbs = create({
 });
 
 // Middlewares
-//app.use(morgan("dev"));
+app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-//app.use(csrf());
-app.use( (req,res,next) => {
-//  res.locals.csrfToken = req.csrfToken();
-  res.locals.mensajes = req.flash('mensajes');
-   return next()
-});
 
 
 

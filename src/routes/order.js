@@ -33,7 +33,7 @@ router.post('/', [
 
 router.get('/orderlist',userisvalid,  readOrders)
 
-router.get('/orderdetail/:orderid',userisvalid,  OrderDetailView)
+router.get('/orderdetail/:orderid',userisvalid, OrderDetailView)
 
 router.get('/deleteorder/:orderid',userisvalid, deleteOrder);
 

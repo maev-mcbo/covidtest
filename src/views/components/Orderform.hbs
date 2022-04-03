@@ -4,7 +4,7 @@
             <form action="/order" method="POST" class="needs-validation " novalidate>
                 <input type="hidden" name="_csrf" value="{{csrfToken}}">
                 <h3>Datos Personales</h3>
-                <div class="form-control mb-5">
+                <div class="form-control mb-5 " style="box-shadow: 20px 20px 60px #5c929d87, -20px -20px 60px #b3f3ff; border-color: white;">
                     <label for="personalID">Cedula</label>
                     <div class="input-group ">
                         <span class="input-group-text"><i class="fa fa-id-card"></i></span>
@@ -20,7 +20,7 @@
                         <label for="fname">Nombre</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text"> <i class="fa fa-user-circle"></i></span>
-                            <input id="fname" name="fname" placeholder="Jhon " type="text" required="required"
+                            <input id="fname" name="fname"  style="text-transform:uppercase" placeholder="Jhon " type="text" required="required"
                                 class="form-control">
                         </div>
 
@@ -29,14 +29,14 @@
                         <label for="lname">Apellido</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa fa-user-circle"></i></span>
-                            <input id="lname" name="lname" placeholder="Doe" type="text" required="required"
+                            <input id="lname" name="lname"style="text-transform:uppercase" placeholder="Doe" type="text" required="required"
                                 class="form-control">
                         </div>
 
                         <label for="mail">Correo Electrónico</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa fa-envelope-open"></i></span>
-                            <input value="lcdoecheverria@gmail.com" id="mail" name="mail"
+                            <input value="lcdoecheverria@gmail.com"style="text-transform:uppercase" id="mail" name="mail"
                                 placeholder="Ingrese correo Electronico" type="text" aria-describedby="mailHelpBlock"
                                 required="required" class="form-control">
                             <span class="input-group-text">jhon.doe@gmail.com</span>
@@ -49,7 +49,7 @@
                         <label for="passport">Pasaporte</label>
                         <div class="input-group">
                             <span class="input-group-text"> <i class="fa fa-address-card"></i></span>
-                            <input id="passport" name="passport" placeholder="51454F455AE4" type="text"
+                            <input id="passport" name="passport"style="text-transform:uppercase" placeholder="51454F455AE4" type="text"
                                 aria-describedby="passportHelpBlock" required="required" class="form-control">
                         </div>
                         <div id="passportHelpBlock" class="form-text mb-3 ">Pasaporte es un identificador
@@ -77,9 +77,9 @@
 
                         <label for="gender">Genero</label>
                         <div class="form-group-text  mb-3   ">
-                            <select id="gender" name="gender" required class="form-select">
+                            <select id="gender"style="text-transform:uppercase" name="gender" required class="form-select">
                                 <option selected disabled value="">Seleccione uno...</option>
-                                <option  value="Masculino">Masculo</option>
+                                <option  value="Masculino">Masculino</option>
                                 <option value="Femenino">Femenino</option>
                                 <option value="Otro">Otros</option>
                             </select>
@@ -93,7 +93,7 @@
                         <div class="form-group-text mb-3">
                             <label for="bornCountry">Pais de Nacimiento</label>
                             <div>
-                                <select id="bornCountry" name="bornCountry" required class="form-select">
+                                <select style="text-transform:uppercase" id="bornCountry" name="bornCountry" required class="form-select">
                                     <option selected disabled value="">Seleccione uno...</option>
                                     <option value="Venezuela">Venezuela</option>
                                     <option value="Afganistan">Afghanistan</option>
@@ -351,7 +351,7 @@
                         <label for="address">Dirección</label>
                         <div class="input-group">
                             <span class="input-group-text"> <i class="fa fa-map-marker"></i> </span>
-                            <input id="address" name="address" type="text" aria-describedby="addressHelpBlock"
+                            <input id="address" style="text-transform:uppercase" name="address" type="text" aria-describedby="addressHelpBlock"
                                 required="required" class="form-control">
                         </div>
                         <div id="addressHelpBlock" class="form-text mb-3">Dirección de habitación, Ej: Urb San
@@ -360,7 +360,7 @@
 
 
                     <h3>Datos de la orden</h3>
-                    <div class="form-control mb-5">
+                    <div class="form-control mb-5 " style="box-shadow: 20px 20px 60px #5c929d87, -20px -20px 60px #b3f3ff; border-color: white;">
 
 
 
@@ -369,7 +369,7 @@
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-vial-virus"></i>
                             </span>
-                            <select id="testtype" name="testtype" aria-describedby="testtypeHelpBlock"
+                            <select style="text-transform:uppercase" id="testtype" name="testtype" aria-describedby="testtypeHelpBlock"
                                 required class="form-select">
                                 <option selected disabled value="">Seleccione una...</option>
                                 <option value="pcr">PCR Molecular</option>
@@ -384,13 +384,13 @@
 
                     </div>
                     <h3>Datos del vuelo</h3>
-                    <div class="form-control mb-3">
+                    <div class="form-control mb-3" style="box-shadow: 20px 20px 60px #5c929d87, -20px -20px 60px #b3f3ff; border-color: white;">
 
 
                         <label for="originF">Pais de Origien</label>
                         <div class="input-group">
                             <span class="input-group-text"> <i class="fa-solid fa-plane-departure"></i></span>
-                            <select id="originF" name="originF" aria-describedby="originFHelpBlock" required
+                            <select  style="text-transform:uppercase" id="originF" name="originF" aria-describedby="originFHelpBlock" required
                                 class="form-select">
                                 <option selected disabled value="">Seleccione uno</option>
                                 <option value="Venezuela">Venezuela</option>
@@ -653,7 +653,7 @@
                             <span class="input-group-text"> <i class="fa-solid fa-plane-arrival"></i></span>
 
 
-                            <select id="destf" name="destf" aria-describedby="destfHelpBlock" required
+                            <select style="text-transform:uppercase" id="destf" name="destf" aria-describedby="destfHelpBlock" required
                                 class="form-select">
                                 <option selected disabled value="">Seleccione uno...</option>
                                 <option value="Venezuela">Venezuela</option>
@@ -915,7 +915,7 @@
                         <div class="input-group">
                             <span class="input-group-text"> <i class="fa-solid fa-cart-flatbed-suitcase"></i>
                             </span>
-                            <select id="airline" name="airline" aria-describedby="airlineHelpBlock" required="required"
+                            <select id="airline" style="text-transform:uppercase" name="airline" aria-describedby="airlineHelpBlock" required="required"
                                 class="form-select">
                                 <option selected disable value="">Seleccione uno</option>
                                 <option value="Rutaca">Rutaca</option>
@@ -933,7 +933,7 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text"> <i class="fa fa-plane"></i>
                             </span>
-                            <input id="idf" name="idf" type="text" aria-describedby="idfHelpBlock" class="form-control">
+                            <input      id="idf" name="idf" type="text" aria-describedby="idfHelpBlock" class="form-control">
                         </div>
 
                         <label for="departuredate" class="form-label">Fecha de salida del Vuelo</label>

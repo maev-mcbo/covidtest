@@ -1,8 +1,9 @@
 const Order = require("../models/orders")
-const {validationResult} = require('express-validator')
+const { validationResult } = require('express-validator')
 const qrcode = require("qrcode")
 const PDFDocument = require('pdfkit')
 const transport = require('../nodemailer/transport')
+const { pipe } = require("pdfkit")
 
 
 
@@ -12,8 +13,8 @@ const orderFrom = (req, res) => {
 
 const orderFromProcess = async (req, res) => {
 
-    const errors= validationResult(req)
-    if(errors.isEmpty()){
+    const errors = validationResult(req)
+    if (errors.isEmpty()) {
         req.flash('mensajes', errors.array())
         return res.redirect('/order')
     }
@@ -23,12 +24,12 @@ const orderFromProcess = async (req, res) => {
     try {
         const newOrder = await new Order(data)
         newOrder.save()
-        req.flash('mensajes', [{msg: "Se la creado una orden Exitosamente"}])
+        req.flash('mensajes', [{ msg: "Se la creado una orden Exitosamente" }])
         res.redirect('/order/orderlist')
 
     } catch (error) {
-        req.flash('mensajes', [{msg: error.message}])
-        return res.redirect('/order/orderlist')    
+        req.flash('mensajes', [{ msg: error.message }])
+        return res.redirect('/order/orderlist')
     }
 
 }
@@ -39,9 +40,9 @@ const readOrders = async (req, res) => {
         const orders = await Order.find().lean();
         res.render('orderlist', { orders });
     } catch (error) {
-        req.flash('mensajes', [{msg: error.message}])
+        req.flash('mensajes', [{ msg: error.message }])
         return res.redirect('orderlist')
-        }
+    }
 
 }
 
@@ -62,15 +63,14 @@ const OrderDetailView = async (req, res) => {
 }
 
 const deleteOrder = async (req, res) => {
-    const errors= validationResult(req)
-    if(!errors.isEmpty()){
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
         req.flash('mensajes', errors.array())
         return res.redirect('/order/orderlist')
     }
-    
+
     const { orderid } = req.params
 
-    //    console.log(id)
     try {
         await Order.findByIdAndDelete(orderid)
         req.flash('mensajes', [{ msg: `Orden ${orderid} Eliminada Exitosamente` }])
@@ -79,49 +79,55 @@ const deleteOrder = async (req, res) => {
 
     } catch (error) {
         req.flash('mensajes', [{ msg: error.message }])
-        return res.redirect('/order/orderlist')    }
+        return res.redirect('/order/orderlist')
+    }
 }
 
 const covidResultProcess = async (req, res) => {
+    const id = req.params.id
+    const covidresulta = req.body.covidresult
 
-    const errors= validationResult(req)
-    if(!errors.isEmpty()){
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
         req.flash('mensajes', errors.array())
-        return res.redirect('/order/orderdetail/')
+        return res.redirect('/order/orderdetail' + id)
     }
-    //const {orderid, result} = req.params
     console.log('ESTE ES EL ID DE LA ORDEN' + req.params.id)
     console.log(' ESTE ES EL RESULTADO' + req.body.covidresulta)
 
-    const id = req.params.id
-    const covidresulta = req.body.covidresult
-    
-    
+
+
     try {
         const newcovidresult = await Order.findOne({ _id: id })
         console.log('orden encontrada ' + newcovidresult)
         newcovidresult.testresult = covidresulta
         await newcovidresult.save()
         console.log('data guardada')
-  
-      await transport.sendMail({
-            from:'hs',
+
+        await transport.sendMail({
+            from: 'testmail@gmail.com',
             to: newcovidresult.mail,
             subject: 'resultado',
-            html:  `<a href="${process.env.SCANURL + newcovidresult._id}">
-                     ver tu resultado aqui</a>`
+            html: `<a href="${process.env.SCANURL + newcovidresult._id}">
+                     ver tu resultado aqui</a>`,
+            attachments: [{
+                filename: `${newcovidresult._id + '_' + newcovidresult.fname + '_' + newcovidresult.lname}.pdf`,
+                path: `${process.env.SCANURL + newcovidresult._id}`
+            }
+            ]
         })
 
 
         req.flash('mensajes', [{ msg: `Resultado a sido cambiado a ${covidresulta} y correo enviado a ${newcovidresult.mail}` }])
 
-        res.redirect(`/order/orderdetail/${id}`)
-        
+        res.redirect('/order/orderdetail/' +id)
+
     } catch (error) {
         req.flash('mensajes', [{ msg: error.message }])
-        return res.redirect(`/order/orderdetail/${id}`)    }
+        return res.redirect('/order/orderdetail/' +id)
+    }
 
-        
+
     //res.send(req.body)
 }
 const scanprocess = async (req, res) => {
@@ -130,20 +136,21 @@ const scanprocess = async (req, res) => {
     const dataorder = await Order.findOne({ _id: id })
     console.log('hola soy la data ' + dataorder)
     const qrpdf = await qrcode.toDataURL(`${process.env.SCANURL + id}`)
+
     const dob = dataorder.dob.slice(0, 4)
     const hoy = new Date().getUTCFullYear()
     const edad = hoy - dob
-    const pcrdesc ="Esta prueba PCR de COVID-19 detecta el material genético del virus mediante una técnica de laboratorio llamada reacción en cadena de la polimerasa." 
+    const pcrdesc = "Esta prueba PCR de COVID-19 detecta el material genético del virus mediante una técnica de laboratorio llamada reacción en cadena de la polimerasa."
     const antigenodesc = 'Este prueba de Antigeno detecta, de manera rápida, mediante una muestra respiratoria, la presencia del antígeno para así poder determinar si tus síntomas son debidos a la infección por SARS-Cov-2.'
-    
-     if(dataorder.testtype!='pcr'){
-        console.log( ' antigeno DESC')
+
+    if (dataorder.testtype != 'pcr') {
+        console.log(' antigeno DESC')
         var descripcion = antigenodesc
-     }else{
-        console.log( 'PCR DESCs ')
+    } else {
+        console.log('PCR DESCs ')
         var descripcion = pcrdesc
 
-     }
+    }
 
     const doc = new PDFDocument({
         bufferPages: true,
@@ -158,7 +165,7 @@ const scanprocess = async (req, res) => {
     filename = encodeURIComponent(filename) + '.pdf'
     // Setting response to 'attachment' (download).
     // If you use 'inline' here it will automatically open the PDF
-    //res.setHeader('Content-disposition', 'attachment; filename="' + filename + '"')
+    res.setHeader('Content-disposition', 'attachment; filename="' + filename + '"')
     res.setHeader('Content-type', 'application/pdf')
     //const content = dataorder
     doc.image(`${qrpdf}`, 735, 40, {
@@ -217,15 +224,17 @@ const scanprocess = async (req, res) => {
     doc.text("DESARROLLADO POR MARIO ECHEVERRIA", 25, 576, { lineBreak: false, align: 'center' });
     doc.pipe(res)
     doc.end()
+
+
 }
 
-const paymentprocess = async(req, res) =>{
+const paymentprocess = async (req, res) => {
 
     const id = req.params.id
-    const {paymenteAmauntform, paymenteStatusform} = req.body
+    const { paymenteAmauntform, paymenteStatusform } = req.body
 
-    console.log('ESTE ES EL ID '+id)
-    console.log('CANTIDAD A PAGAR '+paymenteAmauntform + ' ESTADO DEL PAGO ' + paymenteStatusform )
+    console.log('ESTE ES EL ID ' + id)
+    console.log('CANTIDAD A PAGAR ' + paymenteAmauntform + ' ESTADO DEL PAGO ' + paymenteStatusform)
     try {
         const dataorder = await Order.findOne({ _id: id })
         dataorder.paymenteAmaunt = paymenteAmauntform
@@ -238,7 +247,7 @@ const paymentprocess = async(req, res) =>{
     }
 
 
-} 
+}
 
 
 

@@ -1,39 +1,142 @@
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light ">
-  <div class="container">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler hidden-lg-up" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-        aria-expanded="false" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
-    <div class="collapse navbar-collapse" id="collapsibleNavId">
-      <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-         <li class="nav-item active">
-        <a class="nav-link" href="/user"> Lista de Usuarios</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/user/adduser">Agregar Usuarios</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/order">Agregar Ordenes</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/order/orderlist"> Bandeja de ordenes</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/auth/singup">Singup</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/auth/login">login</a>
-      </li>
-      <li class="nav-item">
-       <a class="nav-link" href="/auth/logout">Logout</a>
-      </li>
-      {{this.mail}}
-       
-      </ul>
-      <form class="d-flex my-2 my-lg-0">
-        <input class="form-control me-sm-2" type="text" placeholder="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
+  <div class="sidebar close">
+    <div class="logo-details bx-menu">
+      <img src="/assets/logo.jpg" width="80px" height="30px" alt="" class="bx-menu "srcset="">
+      {{!-- <i class='bx bx-menu bxl-c-plus-plus'></i> --}}
+      <span class="logo_name">SGPC MCBO</span>
     </div>
+    <ul class="nav-links">
+      <li>
+        <a href="/">
+          <i class='bx bx-grid-alt' ></i>
+          <span class="link_name">Inicio</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="/">Inicio</a></li>
+        </ul>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="/user">
+            <i class='bx bxs-user-detail'></i>
+            <span class="link_name">Usuarios</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Usuarios</a></li>
+          <li><a href="/user">Lista de Usuarios</a></li>
+          <li><a href="/user/adduser">Agregar Usuarios</a></li>
+          {{!-- <li><a href="#">PHP & MySQL</a></li> --}}
+        </ul>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="/order">
+            <i class='bx bx-book-alt' ></i>
+            <span class="link_name">Ordenes</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Ordenes</a></li>
+          <li><a href="/order/orderlist">Lista de Ordenes</a></li>
+          <li><a href="/order">Crear Ordenes</a></li>
+          {{!-- <li><a href="#">Card Design</a></li> --}}
+        </ul>
+      </li>
+      <li> <div class="iocn-link">
+          <a href="/auth/login">
+            <i class='bx bx-log-in' ></i>
+            <span class="link_name">Sesion</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Sesion</a></li>
+          <li><a href="/auth/login">Inicio de Sesión</a></li>
+          <li><a href="/auth/logout">Cerrar Sesion</a></li>
+          <li><a href="/auth/Singup">Registrarse</a></li>
+          {{!-- <li><a href="#">Card Design</a></li> --}}
+        </ul>
+      </li>
+      {{!-- <li>
+        <a href="#">
+          <i class='bx bx-line-chart' ></i>
+          <span class="link_name">Chart</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Chart</a></li>
+        </ul>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-plug' ></i>
+            <span class="link_name">Plugins</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Plugins</a></li>
+          <li><a href="#">UI Face</a></li>
+          <li><a href="#">Pigments</a></li>
+          <li><a href="#">Box Icons</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-compass' ></i>
+          <span class="link_name">Explore</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Explore</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-history'></i>
+          <span class="link_name">History</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">History</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-cog' ></i>
+          <span class="link_name">Setting</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Setting</a></li>
+        </ul>
+      </li>
+      <li> --}}
+    <div class="profile-details">
+      <div class="profile-content">
+        <!--<img src="image/profile.jpg" alt="profileImg">-->
+      </div>
+      <div class="name-job">
+        <div class="profile_name">Prem Shahi</div>
+        <div class="job">Web Desginer</div>
+      </div>
+      <i class='bx bx-log-out' ></i>
+    </div>
+  </li>
+</ul>
   </div>
-</nav>
+
+  <script>
+  let arrow = document.querySelectorAll(".arrow");
+  for (var i = 0; i < arrow.length; i++) {
+    arrow[i].addEventListener("click", (e)=>{
+   let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+   arrowParent.classList.toggle("showMenu");
+    });
+  }
+  let sidebar = document.querySelector(".sidebar");
+  let sidebarBtn = document.querySelector(".bx-menu");
+  console.log(sidebarBtn);
+  sidebarBtn.addEventListener("click", ()=>{
+    sidebar.classList.toggle("close");
+  });
+  </script>
