@@ -7,8 +7,8 @@ router.get('/', (req, res) => {
 
 router.get('/cs', (req, res) => {
      
-     req.session.usuario =  'mario'
-     res.redirect('/')
+     const sesionactiva = req.session 
+     res.json(sesionactiva)
 });
 
 module.exports = router

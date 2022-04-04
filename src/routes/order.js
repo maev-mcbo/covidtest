@@ -12,7 +12,9 @@ const userisvalid = require('../middlewares/userisvalid');
 
 router = Router();
 
-router.get('/', userisvalid, orderFrom)
+router.get('/',  orderFrom)
+
+
 router.post('/', [
     body("fname", "Minimo 3 caracteres").isLength({ min: 3 }),
     body("lname", "Minimo 3 caracteres").isLength({ min: 3 }),
@@ -31,16 +33,16 @@ router.post('/', [
     body("departuredate ", "Seleccione una fecha de salida").notEmpty(),
     body("arrivaldate ", "Seleccione una fecha de llegada").notEmpty(),], orderFromProcess)
 
-router.get('/orderlist',userisvalid,  readOrders)
+router.get('/orderlist/:filter?',  readOrders)
 
-router.get('/orderdetail/:orderid',userisvalid, OrderDetailView)
+router.get('/orderdetail/:orderid', OrderDetailView)
 
-router.get('/deleteorder/:orderid',userisvalid, deleteOrder);
+router.get('/deleteorder/:orderid', deleteOrder);
 
-router.post('/covidresult/:id',userisvalid, covidResultProcess);
+router.post('/covidresult/:id', covidResultProcess);
 
 router.get('/scan/:id', scanprocess);
-router.post('/payment/:id',userisvalid, paymentprocess);
+router.post('/payment/:id', paymentprocess);
 
 module.exports = router;
 

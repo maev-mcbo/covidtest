@@ -3,13 +3,73 @@ const { validationResult } = require('express-validator')
 const qrcode = require("qrcode")
 const PDFDocument = require('pdfkit')
 const transport = require('../nodemailer/transport')
-const { pipe } = require("pdfkit")
+const { ConsoleMessage } = require("puppeteer")
+
+
+const readOrders = async (req, res) => {
+
+    const filtro = req.query.filter
+   // const id = req.query.id
+    console.log(' el filtro es:     ' + filtro)
+
+    switch (filtro) {
+        case "pos":
+            console.log('pos')
+            try {
+                const orders = await Order.find({ testresult: "Positivo" }).lean();
+                orders.reverse()
+                res.render('orderlist', { orders });
+            } catch (error) {
+                req.flash('mensajes', [{ msg: error.message }])
+                return res.redirect('orderlist')
+            } break;
+
+        case "neg":
+            console.log('neg')
+            try {
+                const orders = await Order.find({ testresult: "Negativo" }).lean();
+                orders.reverse()
+                res.render('orderlist', { orders });
+            } catch (error) {
+                req.flash('mensajes', [{ msg: error.message }])
+                return res.redirect('orderlist')
+            } break;
+        case "pen":
+            console.log('pen')
+            try {
+                const orders = await Order.find({ testresult: "pendiente" }).lean();
+                orders.reverse()
+                res.render('orderlist', { orders });
+            } catch (error) {
+                req.flash('mensajes', [{ msg: error.message }])
+                return res.redirect('orderlist')
+            } break;
+        default:
+            console.log('todas')
+            try {
+                const orders = await Order.find().lean();
+                orders.reverse()
+                console.log(" hay "+orders.length + " ordenes");
+                res.render('orderlist', { orders });
+            } catch (error) {
+                req.flash('mensajes', [{ msg: error.message }])
+                return res.redirect('orderlist')
+            }
+
+            break;
+    }
+
+}
 
 
 
 const orderFrom = (req, res) => {
     res.render('order')
 }
+
+
+
+
 
 const orderFromProcess = async (req, res) => {
 
@@ -33,18 +93,7 @@ const orderFromProcess = async (req, res) => {
     }
 
 }
-const readOrders = async (req, res) => {
 
-
-    try {
-        const orders = await Order.find().lean();
-        res.render('orderlist', { orders });
-    } catch (error) {
-        req.flash('mensajes', [{ msg: error.message }])
-        return res.redirect('orderlist')
-    }
-
-}
 
 const OrderDetailView = async (req, res) => {
     const id = req.params.orderid
@@ -120,11 +169,11 @@ const covidResultProcess = async (req, res) => {
 
         req.flash('mensajes', [{ msg: `Resultado a sido cambiado a ${covidresulta} y correo enviado a ${newcovidresult.mail}` }])
 
-        res.redirect('/order/orderdetail/' +id)
+        res.redirect('/order/orderdetail/' + id)
 
     } catch (error) {
         req.flash('mensajes', [{ msg: error.message }])
-        return res.redirect('/order/orderdetail/' +id)
+        return res.redirect('/order/orderdetail/' + id)
     }
 
 

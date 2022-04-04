@@ -1,20 +1,80 @@
 {{#if orders}}
-    <h1>Bandeja de ordenes</h1>
-    {{#each orders }}
-        {{> Order}}
-        <a id="neworder" href="/order"><i  class="fa-solid fa-plus"> </i> Nueva Orden </a>
 
-    {{/each}}
+<div class="d-md-flex justify-content-md-between ">
+    <h1>Bandeja de ordenes
+        <span class="badge bg-info text-wrap align-middle" style="font-size: medium;">
+            hay {{orders.length}} ordenes
+        </span>
+    </h1>
+    <form action="/order/orderlist" method="get">
+        <div>
+            <div class="dropdown float-end d-md-flex ">
+                <label class="align-middle " for="id">
+                    Filtrar por Cedula:
+                </label>
+                <input class="form-control me-2" name="filter" type="number" value="this.value" id="id">
+
+                <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenufilter"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    filtrar
+                </button>
+                <ul class="dropdown-menu p-2" aria-labelledby="dropdownMenufilter">
+                    <li>
+                        <input class="form-check-input" name="filter" type="radio" value="all"
+                            onchange="this.form.submit()" id="all">
+                        <label class="form-check-label" for="all">
+                            Todas
+                        </label>
+                    </li>
+                    <li>
+                        <input class="form-check-input" name="filter" value="pos" type="radio"
+                            onchange="this.form.submit()" id="pos">
+                        <label class="form-check-label" for="pos">
+                            Positivos
+                        </label>
+                    </li>
+                    <li>
+                        <input class="form-check-input" name="filter" value="neg" type="radio"
+                            onchange="this.form.submit()" id="neg">
+                        <label class="form-check-label" for="neg">
+                            Negativo
+                        </label>
+                    </li>
+                    <li>
+                        <input class="form-check-input" name="filter" value="pen" type="radio" value="pendiente"
+                            onchange="this.form.submit()" id="pen">
+                        <label class="form-check-label" for="pen">
+                            Pendiente
+                        </label>
+                    </li>
+                </ul>
+            </div>
+    </form>
+</div>
+</div>
+
+
+<!-- Example single danger button -->
+
+
+
+
+
+{{#each orders }}
+{{> Order}}
+<a id="neworder" href="/order"><i class="fa-solid fa-plus"> </i> Nueva Orden </a>
+
+{{/each}}
 {{else}}
+
 
 <div class="container">
     <div class="row justify-content-center aligh-items-center">
-    <div class="col-6">    
-    <h1> No hay ordenes, puedes crear una  pulsando aqui.  </h1>
-    <a id="neworder1" href="/order"><i  class="fa-solid fa-plus"> </i> Crear orden </a>
-    </div>
+        <div class="col-6">
+            <h1> No hay ordenes, puedes crear una pulsando aqui. </h1>
+            <a id="neworder1" href="/order"><i class="fa-solid fa-plus"> </i> Crear orden </a>
+        </div>
     </div>
 </div>
 
 {{/if}}
-

@@ -29,12 +29,12 @@ app.use(session({
 
 app.use(flash())
 //app.use(csrf());
-app.use( (req,res,next) => {
-//    res.locals.csrfToken = req.csrfToken();
+app.use((req, res, next) => {
+    //    res.locals.csrfToken = req.csrfToken();
     res.locals.mensajes = req.flash('mensajes');
-     return next()
-  });
-  
+    return next()
+});
+
 
 app.use(mongoSanitize());
 app.use(passport.initialize())
@@ -43,18 +43,18 @@ app.use(passport.session())
 
 const corsOptions = {
     credentials: true,
-    origin: process.env.HEROPATH 
+    origin: process.env.HEROPATH
 };
 app.use(cors(corsOptions));
 
 
-passport.serializeUser((user, done) =>done(null, {id: user._id, mail: user.username}) 
+passport.serializeUser((user, done) => done(null, { id: user._id, mail: user.mail })
 );
-passport.deserializeUser( async(user, done) =>{
+passport.deserializeUser(async (user, done) => {
 
-const userdb = await operator.findById(user.id)
+    const userdb = await operator.findById(user.id)
     //console.log('usuario encontrado: '+  userdb)
-    return done(null, {id: userdb._id, mail: user.username})
+    return done(null, { id: userdb._id, mail: user.username })
 })
 
 // Settings
@@ -66,7 +66,7 @@ const hbs = create({
         path.join(__dirname, 'views/components')
     ],
     helpers: {
-       ifEquals: function(arg1, arg2, options) {
+        ifEquals: function (arg1, arg2, options) {
             return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
         }
     }
@@ -90,7 +90,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use('/', require('./routes'));
 app.use('/auth', require('./routes/auth'));
 app.use('/user', require('./routes/user'));
-app.use('/order',require('./routes/order'))
+app.use('/order', require('./routes/order'))
 
 
 
