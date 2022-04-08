@@ -90,7 +90,7 @@ const updateUser = async (req, res) => {
 const readcne = async (req, res) => {
 
     const cedula = req.params.cedula
-    console.log('esta es la cedula ' + cedula);
+    console.log('esta es la cedulaaaa ' + cedula);
 
     const navegador = await puppeteer.launch({
         headless: true,
