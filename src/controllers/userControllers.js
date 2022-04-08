@@ -98,7 +98,6 @@ const readcne = async (req, res) => {
     })
     const page = await navegador.newPage();
     await page.goto(`http://www.cne.gob.ve/web/registro_electoral/ce.php?nacionalidad=V&cedula=${cedula}`)
-    await page.waitForNavigation({waitUntil: 'domcontentloaded'})
     const nombre = await page.$eval("body > table > tbody > tr > td > table > tbody > tr:nth-child(5) > td > table > tbody > tr:nth-child(2) > td > table:nth-child(1) > tbody > tr:nth-child(2) > td:nth-child(2) > b", el => el.textContent)
     const direccion = await page.$eval('body > table > tbody > tr > td > table > tbody > tr:nth-child(5) > td > table > tbody > tr:nth-child(2) > td > table:nth-child(1) > tbody > tr:nth-child(7) > td:nth-child(2)', el => el.textContent)
     await Promise.all([nombre, direccion])
