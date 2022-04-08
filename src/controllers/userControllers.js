@@ -92,7 +92,10 @@ const readcne = async (req, res) => {
     const cedula = req.params.cedula
     console.log('esta es la cedula ' + cedula);
 
-    const navegador = await Puppeteer.launch();
+    const navegador = await puppeteer.launch({
+        headless: true,
+        args: ['--no-sandbox','--disable-setuid-sandbox']
+      })
     const page = await navegador.newPage();
     await page.goto(`http://www.cne.gob.ve/web/registro_electoral/ce.php?nacionalidad=V&cedula=${cedula}`)
     // await page.waitForNavigation({waitUntil: 'domcontentloaded'})
