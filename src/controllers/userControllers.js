@@ -92,7 +92,7 @@ const readcne = async (req, res) => {
     const cedula = req.params.cedula
     console.log('esta es la cedulaaaa ' + cedula);
 
-    const navegador = await puppeteer.launch({
+    const navegador = await  Puppeteer.launch({
         headless: true,
         args: ['--no-sandbox','--disable-setuid-sandbox']
       })
