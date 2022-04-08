@@ -50,7 +50,9 @@ const readOrders = async (req, res) => {
                 const orders = await Order.find().lean();
                 orders.reverse()
                 console.log(" hay "+orders.length + " ordenes");
-                res.render('orderlist', { orders });
+                // res.json(orders)
+                //console.log(orders);
+               res.render('orderlist', { orders });
             } catch (error) {
                 req.flash('mensajes', [{ msg: error.message }])
                 return res.redirect('orderlist')

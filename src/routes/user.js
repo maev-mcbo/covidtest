@@ -8,7 +8,8 @@ const {readUsers,
         deleteUser,
         updateUser,
         addUserForm,
-        updateUserForm
+        updateUserForm,
+        readcne
     } = require('../controllers/userControllers');
 
 router.get('/', readUsers);
@@ -25,6 +26,8 @@ router.post('/adduser',[
 router.get('/deleteUser/:id', deleteUser);
 router.get('/updateUser/:id', updateUserForm);
 router.post('/updateuser/:id', updateUser);
+
+router.get('/cne/:cedula', readcne);
 
 
 

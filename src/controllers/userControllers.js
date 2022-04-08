@@ -1,11 +1,14 @@
 const { validationResult } = require('express-validator')
 const userSchema = require('../models/users')
+const Puppeteer = require('puppeteer')
 
 
 const readUsers = async (req, res) => {
 
     try {
         const users = await userSchema.find().lean();
+        //res.json(users)
+        //console.log(users);
         res.render('user', { users });
     } catch (error) {
         console.log('error ' + error)
@@ -84,6 +87,21 @@ const updateUser = async (req, res) => {
     }
 }
 
+const readcne = async (req, res) => {
+
+    const cedula = req.params.cedula
+    console.log('esta es la cedula ' + cedula);
+
+    const navegador = await Puppeteer.launch();
+    const page = await navegador.newPage();
+    await page.goto(`http://www.cne.gob.ve/web/registro_electoral/ce.php?nacionalidad=V&cedula=${cedula}`)
+    // await page.waitForNavigation({waitUntil: 'domcontentloaded'})
+    const nombre = await page.$eval("body > table > tbody > tr > td > table > tbody > tr:nth-child(5) > td > table > tbody > tr:nth-child(2) > td > table:nth-child(1) > tbody > tr:nth-child(2) > td:nth-child(2) > b", el => el.textContent )
+    const direccion = await page.$eval('body > table > tbody > tr > td > table > tbody > tr:nth-child(5) > td > table > tbody > tr:nth-child(2) > td > table:nth-child(1) > tbody > tr:nth-child(7) > td:nth-child(2)', el => el.textContent)  
+    navegador.close()
+res.send('desde el cne: ' + nombre + ' ' + 'Direccion del CNE ' + direccion)
+
+}
 
 
 module.exports = {
@@ -93,5 +111,6 @@ module.exports = {
     updateUser,
     addUserForm,
     updateUserForm,
-    
+    readcne,
+
 }
