@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const qr = require("qrcode")
 const { Schema } = mongoose
+
 
 const ordersSchema = new Schema({
     fname: {
@@ -91,14 +91,21 @@ const ordersSchema = new Schema({
         type: String,
        default: null 
     },
+    orderDate:{
+        type: Date,
+        default: Date.now
+    }
 
 }, {
-    timestamps: true
+    timestamps: {createdAt: true, updatedAt: false}
 })
 
-
-
-
+// ordersSchema.pre('save', (next) => {
+//     var self = this
+//     const date = new Date()
+//     self.orderDate=date.toISOString().split('T')[0]
+//     next()
+// })
 
 const Order = mongoose.model('order', ordersSchema);
 module.exports = Order

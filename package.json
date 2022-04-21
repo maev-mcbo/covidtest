@@ -17,7 +17,9 @@
   "author": "Mario Echeverria",
   "license": "ISC",
   "dependencies": {
+    "@aasaam/brand-icons": "^0.0.24",
     "bcryptjs": "^2.4.3",
+    "chart.js": "^3.7.1",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^4.6.0",
     "cors": "^2.8.5",

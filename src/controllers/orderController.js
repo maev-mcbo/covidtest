@@ -9,14 +9,24 @@ const { ConsoleMessage } = require("puppeteer")
 const readOrders = async (req, res) => {
 
     const filtro = req.query.filter
-   // const id = req.query.id
+    // const id = req.query.id
     console.log(' el filtro es:     ' + filtro)
 
     switch (filtro) {
-        case "pos":
-            console.log('pos')
+        case "all":
+           //console.log('pos')
             try {
-                const orders = await Order.find({ testresult: "Positivo" }).lean();
+                const orders = await Order.find().lean();
+                orders.reverse()
+                res.render('orderlist', { orders });
+            } catch (error) {
+                req.flash('mensajes', [{ msg: error.message }])
+                return res.redirect('orderlist')
+            } break;
+        case "pos":
+            //console.log('pos')
+            try {
+                const orders = await Order.find({ testresult: "positivo" }).lean();
                 orders.reverse()
                 res.render('orderlist', { orders });
             } catch (error) {
@@ -25,9 +35,9 @@ const readOrders = async (req, res) => {
             } break;
 
         case "neg":
-            console.log('neg')
+            //console.log('neg')
             try {
-                const orders = await Order.find({ testresult: "Negativo" }).lean();
+                const orders = await Order.find({ testresult: "negativo" }).lean();
                 orders.reverse()
                 res.render('orderlist', { orders });
             } catch (error) {
@@ -35,7 +45,7 @@ const readOrders = async (req, res) => {
                 return res.redirect('orderlist')
             } break;
         case "pen":
-            console.log('pen')
+         //   console.log('pen')
             try {
                 const orders = await Order.find({ testresult: "pendiente" }).lean();
                 orders.reverse()
@@ -44,15 +54,30 @@ const readOrders = async (req, res) => {
                 req.flash('mensajes', [{ msg: error.message }])
                 return res.redirect('orderlist')
             } break;
-        default:
-            console.log('todas')
+        case "anulado":
+         console.log("Filtro seleecionado: "+ filtro)
             try {
-                const orders = await Order.find().lean();
+                const orders = await Order.find({ testresult: "Anulado" }).lean();
                 orders.reverse()
-                console.log(" hay "+orders.length + " ordenes");
+                res.render('orderlist', { orders });
+            } catch (error) {
+                req.flash('mensajes', [{ msg: error.message }])
+                return res.redirect('orderlist')
+            } break;
+        default:
+            console.log('today')
+            try {
+                // const hoy = new Date().toISOString().split('T')[0]
+                // console.log(hoy)
+                var now = new Date();
+                var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                console.log(startOfToday)
+                const orders = await Order.find({ createdAt: { $gte: startOfToday } }).lean()
+                orders.reverse()
+                console.log(" hay " + orders.length + " ordenes");
                 // res.json(orders)
                 //console.log(orders);
-               res.render('orderlist', { orders });
+                res.render('orderlist', { orders });
             } catch (error) {
                 req.flash('mensajes', [{ msg: error.message }])
                 return res.redirect('orderlist')

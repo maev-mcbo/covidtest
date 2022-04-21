@@ -17,6 +17,13 @@
                 </button>
                 <ul class="dropdown-menu p-2" aria-labelledby="dropdownMenufilter">
                     <li>
+                        <input class="form-check-input" name="filter" type="radio" value="today"
+                            onchange="this.form.submit()" id="today">
+                        <label class="form-check-label" for="today">
+                            Hoy
+                        </label>
+                    </li>
+                    <li>
                         <input class="form-check-input" name="filter" type="radio" value="all"
                             onchange="this.form.submit()" id="all">
                         <label class="form-check-label" for="all">
@@ -38,10 +45,17 @@
                         </label>
                     </li>
                     <li>
-                        <input class="form-check-input" name="filter" value="pen" type="radio" value="pendiente"
+                        <input class="form-check-input" name="filter"  type="radio" value="pen"
                             onchange="this.form.submit()" id="pen">
                         <label class="form-check-label" for="pen">
                             Pendiente
+                        </label>
+                    </li>
+                    <li>
+                        <input class="form-check-input" name="filter"  type="radio" value="anulado"
+                            onchange="this.form.submit()" id="anulado">
+                        <label class="form-check-label" for="anulado">
+                            Anuladas
                         </label>
                     </li>
                 </ul>

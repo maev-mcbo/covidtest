@@ -1,0 +1,88 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js" integrity="sha256-7lWo7cjrrponRJcS6bc8isfsPDwSKoaYfGIHgSheQkk=" crossorigin="anonymous"></script>
+
+<div class="container px-5">
+    <h1>Dashboard</h1>
+    <div class="row pt-5 ">
+        <h2 class="text-center">Estadísticas de Hoy</h2>
+        <div class="col border p-5">
+            <div class="row px-1 d-flex justify-content-center  ">
+                <div class="col p-5 text-center align-items-center">
+                    <h4>Ordenes</h4>
+                    <span>{{this.total}}</span>
+                </div>
+                <div class="col border p-5 align-items-center">
+                    <h4>Pagos</h4>
+                    <ul style="list-style-type: none;">
+                        <li><img src="https://cdn.jsdelivr.net/gh/aasaam/brand-icons/svg/si_zelle.svg" width="16"
+                                height="16" /><span> 150$</span></li>
+                        <li><img src="https://cdn.jsdelivr.net/gh/aasaam/brand-icons/svg/si_paypal.svg" width="16"
+                                height="16" /><span> 150$</span></li>
+                        <li><img src="https://cdn.jsdelivr.net/gh/aasaam/brand-icons/svg/si_binance.svg" width="16"
+                                height="16" /><span> 150$</span></li>
+                        <li><img src="https://cdn.jsdelivr.net/gh/aasaam/brand-icons/svg/si_bitcoin.svg" width="16"
+                                height="16" /><span> 150$</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <h2 class="text-center p-5">Estatus de ordenes</h2>
+                <div class="col ">
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Pendientes
+                            <span class="badge bg-primary rounded-pill">{{this.pendientes}}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Positivas
+                            <span class="badge bg-primary rounded-pill">{{this.positivas}}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Negativas
+                            <span class="badge bg-primary rounded-pill">{{this.negativas}}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Anuladas
+                            <span class="badge bg-primary rounded-pill">{{this.anuladas}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 p-5">
+            <h4 class=" text-center"> Relacion Ordenes</h4>
+            <div>
+               <canvas id="myChart" width="400" height="400"></canvas>
+<script>
+const ctx = document.getElementById('myChart').getContext('2d');
+
+    const dataorder = [{{this.pendientes}}, {{this.positivas}}, {{this.negativas}}, {{this.anuladas}}]
+   
+const myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels:['Pendientes','Negativas','Positivas', 'Anuladas'],
+        datasets: [{
+            label: 'Ordenes',
+            data: dataorder,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(30,144,255, 0.2)',
+                'rgba(255,127,80, 0.2)',
+                'rgba(255,140,0, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+            ],
+            borderWidth: 2
+        }]
+    },
+    options: {
+
+    }
+});
+</script>
+            </div>
+
+        </div>
+    </div>
+</div>
