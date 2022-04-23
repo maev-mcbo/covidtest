@@ -136,7 +136,7 @@
                 <a href="/order/scan/{{this._id}}"  target="_blank" class="btn btn-info">IMPRIMIR RESULTADO</a>
               </div>
               <div class="col d-flex justify-content-center ">
-             {{!-- <a href="/order/scan/{{this._id}}" target="_blank">  <div id="qrcode" ></div></a> --}}
+             <a href="/order/scan/{{this._id}}" target="_blank">  <div id="qrcode" ></div></a>
              </div>
               </div>
 
@@ -147,14 +147,4 @@
     </div>
   </div>
 </div>
-
-              <script type="text/javascript">
-                var qrcode = new QRCode(document.getElementById("qrcode"), {
-                  text: "/order/scan/{{this._id}}",
-                  width: 128,
-                  height: 128,
-                  colorDark: "#000",
-                  colorLight: "#ffffff",
-                  correctLevel: QRCode.CorrectLevel.H
-                });
-              </script>
+            

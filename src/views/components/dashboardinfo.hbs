@@ -21,10 +21,14 @@
                         <div class="col-md-6 mb-4">
                             <div class="card textwhite bg-info text-white fw-bold text-center shadow">
                                 <div class="card-body">
-                                    <p class="m-0 fs-4">Ingresos Globales</p>
+                                    <p class="m-0 fs-4">Ingresos Globales de Hoy</p>
                                     <div class="d-inline-flex">
-                                        <div><p class="text-white small m-0 fs-1 me-5">{{this.totalfacturadobs}} </p></div>
-                                        <div><p class="text-white small m-0 fs-1">{{this.facturadodolares}} </p></div>
+                                        <div>
+                                            <p class="text-white small m-0 fs-1 pe-5">{{this.totalfacturadobs}} </p>
+                                        </div>
+                                        <div>
+                                            <p class="text-white small m-0 fs-1">{{this.totalfacturadodolares}} </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -109,8 +113,7 @@
                                         <script>
                                             const ctx = document.getElementById('myChart2').getContext('2d');
 
-                                            const dataorder = [{{this.pendientes}}, {{this.positivas}}, {{this.negativas}}, {{this.anuladas}}]
-
+                                            const dataorder = [{{this.pendientes}}, {{this.positivas}},{{this.negativas}}, {{this.anuladas}}]
                                             const myChart = new Chart(ctx, {
                                                 type: 'bar',
                                                 data: {
@@ -124,11 +127,14 @@
                                                             'rgba(255,127,80, 0.2)',
                                                             'rgba(255,140,0, 0.2)',
                                                         ],
-                                                        borderColor: [
-                                                            'rgba(255, 99, 132, 1)',
-                                                        ],
                                                         borderWidth: 2
-                                                    }]
+                                                    }, {
+                                                        type: 'line',
+                                                        label: 'Line Dataset',
+                                                        data: [50, 50, 50, 50],
+                                                    }
+
+                                                    ]
                                                 },
                                                 options: {
                                                     responsive: true,

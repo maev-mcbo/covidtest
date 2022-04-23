@@ -10,7 +10,7 @@ const readOrders = async (req, res) => {
 
     const filtro = req.query.filter
     // const id = req.query.id
-    console.log(' el filtro es:     ' + filtro)
+    console.log('el filtro es: ' + filtro)
 
     switch (filtro) {
         case "all":
@@ -26,8 +26,9 @@ const readOrders = async (req, res) => {
         case "pos":
             //console.log('pos')
             try {
-                const orders = await Order.find({ testresult: "positivo" }).lean();
+                const orders = await Order.find({ testresult: "Positivo" }).lean();
                 orders.reverse()
+                console.log(orders);
                 res.render('orderlist', { orders });
             } catch (error) {
                 req.flash('mensajes', [{ msg: error.message }])
@@ -230,78 +231,6 @@ const scanprocess = async (req, res) => {
 
     }
 
-    const doc = new PDFDocument({
-        bufferPages: true,
-        font: 'Helvetica',
-        size: 'A4',
-        margin: 20,
-        layout: 'landscape',
-        displayTitle: "prueba",
-    })
-    let filename = dataorder._id
-    // Stripping special characters
-    filename = encodeURIComponent(filename) + '.pdf'
-    // Setting response to 'attachment' (download).
-    // If you use 'inline' here it will automatically open the PDF
-    res.setHeader('Content-disposition', 'attachment; filename="' + filename + '"')
-    res.setHeader('Content-type', 'application/pdf')
-    //const content = dataorder
-    doc.image(`${qrpdf}`, 735, 40, {
-        width: 90,
-        height: 90,
-        align: 'center'
-    })
-    doc.image(`src/images/logo.jpg`, 20, 50, {
-        height: 50,
-        align: 'center'
-    })
-    //  doc.rect(0, 0, 1000 ,30).fill("red")
-    // header
-    doc.rect(0, 0, 1000, 30).fillAndStroke('teal');
-    doc.fill('#fff').stroke();
-    doc.fontSize(16);
-    doc.text("SISTEMA DE GESTION PARA PRUEBAS COVID", 25, 10, { lineBreak: false, align: 'center' });
-    doc.rect(0, 565, 1000, 30).fillAndStroke('teal');
-    doc.fill('#000').stroke();
-    doc.rect(320, 150, 500, 250).fillAndStroke('#fff', '#000');
-    //doc.fill('#fff').stroke();
-    doc.fontSize(16);
-    doc.moveDown(6)
-    doc.fontSize(8).text(`LADO IZQUIERDO`, 50).fillColor('#000');
-    doc.fontSize(12).text(`Nombre: | First Name:`);
-    doc.fontSize(16).text(`${dataorder.fname.toUpperCase()}`).moveDown(0.5);
-    doc.fontSize(12).text(`Apellido: | Last Name:`);
-    doc.fontSize(16).text(` ${dataorder.lname.toUpperCase()} `).moveDown(0.5);
-    doc.fontSize(12).text(`Pasaporte: | Passport:`);
-    doc.fontSize(16).text(`${dataorder.passport.toUpperCase()}`).moveDown(0.5);
-    doc.fontSize(12).text(`Cedula: | ID:`);
-    doc.fontSize(16).text(`${dataorder.personalID.toUpperCase()}`).moveDown(0.5);
-    doc.fontSize(12).text(`Genero: | Gender:`);
-    doc.fontSize(16).text(`${dataorder.gender.toUpperCase()}`).moveDown(0.5);
-    doc.fontSize(12).text(`Edad:`);
-    doc.fontSize(16).text(`${edad}`).moveDown(0.5);
-    doc.fontSize(12).text(`Telefono:`);
-    doc.fontSize(16).text(`${dataorder.phone}`).moveDown(0.5);
-    doc.fontSize(12).text(`Dirección:`);
-    doc.fontSize(16).text(`${dataorder.address.toUpperCase()}`).moveDown(0.5);
-    doc.fontSize(12).text(`Tipo de Prueba:`);
-    doc.fontSize(16).text(`${dataorder.testtype.toUpperCase()}`).moveDown(0.5);
-    //doc.fontSize(8).text(`LADO DERECHO`, 600,200); 
-    doc.fontSize(20).text(`RESULTADO: `, 680, 160);
-    doc.fontSize(50).text(`${dataorder.testresult.toUpperCase()}`, 480, 190, {
-        width: 410,
-        align: 'center'
-    });
-    //doc.fontSize(50).text(`NEGATIVO`, 555,190,{width: 410,
-    //  align: 'center'});
-    doc.fontSize(12).text(`DESCRIPCION DE LA PRUEBA`, 625, 240);
-    doc.fontSize(16).text(`${descripcion}`).moveDown(0.5);
-    //doc.fontSize(16).text(`${dataorder.testtype.toUpperCase()}`, { align: 'rigth' }).moveDown(0.5);
-    doc.fill('#fff').stroke();
-    doc.fontSize(16);
-    doc.text("DESARROLLADO POR MARIO ECHEVERRIA", 25, 576, { lineBreak: false, align: 'center' });
-    doc.pipe(res)
-    doc.end()
 
 
 }
