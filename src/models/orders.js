@@ -73,7 +73,7 @@ const ordersSchema = new Schema({
         require: true,
         default: null
     },
-    paymenteAmaunt: {
+    paymentAmaunt: {
         type: Number,
         require: true,
         default: null
@@ -94,6 +94,10 @@ const ordersSchema = new Schema({
     orderDate:{
         type: Date,
         default: Date.now
+    },
+    currency: {
+        type: String,
+       default: null 
     }
 
 }, {

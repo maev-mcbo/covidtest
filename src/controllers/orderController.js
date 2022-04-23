@@ -180,7 +180,7 @@ const covidResultProcess = async (req, res) => {
         await newcovidresult.save()
         console.log('data guardada')
 
-        await transport.sendMail({
+        let info = await transport.sendMail({
             from: 'testmail@gmail.com',
             to: newcovidresult.mail,
             subject: 'resultado',
@@ -192,6 +192,8 @@ const covidResultProcess = async (req, res) => {
             }
             ]
         })
+        console.log("Message sent: %s", info.messageId);
+
 
 
         req.flash('mensajes', [{ msg: `Resultado a sido cambiado a ${covidresulta} y correo enviado a ${newcovidresult.mail}` }])
@@ -218,7 +220,7 @@ const scanprocess = async (req, res) => {
     const edad = hoy - dob
     const pcrdesc = "Esta prueba PCR de COVID-19 detecta el material genético del virus mediante una técnica de laboratorio llamada reacción en cadena de la polimerasa."
     const antigenodesc = 'Este prueba de Antigeno detecta, de manera rápida, mediante una muestra respiratoria, la presencia del antígeno para así poder determinar si tus síntomas son debidos a la infección por SARS-Cov-2.'
-
+    console.log("pruebas");
     if (dataorder.testtype != 'pcr') {
         console.log(' antigeno DESC')
         var descripcion = antigenodesc
@@ -307,14 +309,15 @@ const scanprocess = async (req, res) => {
 const paymentprocess = async (req, res) => {
 
     const id = req.params.id
-    const { paymenteAmauntform, paymenteStatusform } = req.body
+        const { paymenteAmauntform, paymenteStatusform,currency } = req.body
 
     console.log('ESTE ES EL ID ' + id)
-    console.log('CANTIDAD A PAGAR ' + paymenteAmauntform + ' ESTADO DEL PAGO ' + paymenteStatusform)
+    console.log('CANTIDAD A PAGAR ' + paymenteAmauntform + ' ESTADO DEL PAGO ' + paymenteStatusform + " El tipo de moneda es: "+ currency)
     try {
         const dataorder = await Order.findOne({ _id: id })
-        dataorder.paymenteAmaunt = paymenteAmauntform
+        dataorder.paymentAmaunt = paymenteAmauntform
         dataorder.paymentStatus = paymenteStatusform
+        dataorder.currency = currency
         await dataorder.save()
         res.redirect(`/order/orderdetail/${id}`)
 
