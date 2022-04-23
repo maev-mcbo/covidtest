@@ -56,8 +56,6 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  ...
-
                   <form action="/order/payment/{{this._id}}" method="post">
                     <input type="hidden" name="_csrf" value="{{csrfToken}}">
                     <label for="paymenteAmaunt">
@@ -73,8 +71,6 @@
                       <option value="Aprobado">Aprobado</option>
                       <option value="Rechazado">Rechazado</option>
                     </select>
-                  
-                  ...
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>

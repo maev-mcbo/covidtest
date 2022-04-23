@@ -37,7 +37,7 @@ const readOrders = async (req, res) => {
         case "neg":
             //console.log('neg')
             try {
-                const orders = await Order.find({ testresult: "negativo" }).lean();
+                const orders = await Order.find({ testresult: "Negativo" }).lean();
                 orders.reverse()
                 res.render('orderlist', { orders });
             } catch (error) {
