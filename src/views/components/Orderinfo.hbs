@@ -1,4 +1,5 @@
-<div class="card text-uppercase" style="box-shadow: 20px 20px 60px #5c929d87, -20px -20px 60px #b3f3ff; border-color: white;">
+<div class="card text-uppercase"
+  style="box-shadow: 20px 20px 60px #5c929d87, -20px -20px 60px #b3f3ff; border-color: white;">
   <div class="card-body ">
     <div class="container text-uppercase">
       <div class="row gx-2 justify-content">
@@ -66,7 +67,8 @@
                     <label for="payment">
                       <p class="mb-0 mt-1 fw-bold text-center">Estado del Pago:</p>
                     </label>
-                    <select id="payment" class="form-select" name="paymenteStatusform" aria-label="Default select example">
+                    <select id="payment" class="form-select" name="paymenteStatusform"
+                      aria-label="Default select example">
                       <option selected disabled>Seleccione uno...</option>
                       <option value="Aprobado">Aprobado</option>
                       <option value="Rechazado">Rechazado</option>
@@ -83,7 +85,7 @@
                 <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                   <button type="submit" class="btn btn-info">Guardar</button>
-                </form>
+                  </form>
                 </div>
               </div>
             </div>
@@ -126,20 +128,14 @@
                     class="fa-solid fa-money-check-dollar-pen"></i> CONFIRMAR RESULTADO </button>
               </form>
 
-              
+
             </div>
           </div>
           <div class="container d-inline ">
             <div class="row align-items-center justify-content-center">
               <div class="col ">
-                <a href="/order/scan/{{this._id}}" class="btn btn-info mb-3">DESCARGAR RESULTADO</a>
-                <a href="/order/scan/{{this._id}}"  target="_blank" class="btn btn-info">IMPRIMIR RESULTADO</a>
+                <a href="/pdf/{{this._id}}" target="_blank" class="btn btn-info">IMPRIMIR RESULTADO</a>
               </div>
-              <div class="col d-flex justify-content-center ">
-             <a href="/order/scan/{{this._id}}" target="_blank">  <div id="qrcode" ></div></a>
-             </div>
-              </div>
-
             </div>
           </div>
         </div>
@@ -147,4 +143,4 @@
     </div>
   </div>
 </div>
-            
+</div>

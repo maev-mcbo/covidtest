@@ -2,16 +2,38 @@ const Order = require("../models/orders")
 const puppeteer = require("puppeteer");
 require('dotenv').config();
 
-
+function getAge(date) 
+{
+    var today = new Date();
+    console.log(date)
+    var birthDate = new Date(date);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+    {
+        age--;
+    }
+    return age;
+}
 
 const pdfmaker = async (req, res) =>{
    
     const id = req.params.id
-    const data = await Order.findOne({ _id: id }).lean();
+    try {
+        const data = await Order.findOne({ _id: id }).lean();
     data.url= process.env.SCANURL + id
+
+    const dob = data.dob
+    data.age = getAge(dob)
+    
 
     console.log(data);
     res.render("pdf",{data, layout: 'clean'})
+
+
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 const pdf = async (req, res) =>{
