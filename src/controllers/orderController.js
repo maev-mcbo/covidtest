@@ -2,6 +2,9 @@ const Order = require("../models/orders")
 const { validationResult } = require('express-validator')
 const qrcode = require("qrcode")
 const transport = require('../nodemailer/transport')
+const accountSid = 'AC45d34eabf82b30bc1e499607ad1d853c'; 
+const authToken = '[Redacted]'; 
+const client = require('twilio')(process.env.ACCOUNTSID, process.env.AUTHTOKEN); 
 require('dotenv').config();
 
 
@@ -189,6 +192,16 @@ const covidResultProcess = async (req, res) => {
         })
 
         console.log("Message sent: %s", info.messageId);
+
+        client.messages 
+      .create({ 
+         body: `Su resultado esta listo, puede verlo en este enlace > ${process.env.SCANURL + newcovidresult.id}`, 
+         from: 'whatsapp:+14155238886',       
+         to: 'whatsapp:+584246207462',
+         mediaUrl: `${process.env.SCANURL + newcovidresult.id}`
+       }) 
+      .then(message => console.log(message.sid)) 
+      .done();
 
         req.flash('mensajes', [{ msg: `Resultado a sido cambiado a ${covidresulta} y correo enviado a ${newcovidresult.mail}` }])
 

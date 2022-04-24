@@ -72,6 +72,7 @@ const hbs = create({
     }
 });
 
+
 // Middlewares
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
