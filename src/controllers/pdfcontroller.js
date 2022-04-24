@@ -18,7 +18,8 @@ const pdf = async (req, res) =>{
  const id = req.params.id
 const url = `http://localhost:5000/pdfmaker/${id}`
     const browser = await puppeteer.launch({
-        headless: true
+        headless: true,
+        args: ['--no-sandbox','--disable-setuid-sandbox']
     });
     const webPage = await browser.newPage();
     await webPage.goto(url, {

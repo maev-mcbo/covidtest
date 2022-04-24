@@ -89,15 +89,9 @@ const readOrders = async (req, res) => {
 
 }
 
-
-
 const orderFrom = (req, res) => {
     res.render('order')
 }
-
-
-
-
 
 const orderFromProcess = async (req, res) => {
 
@@ -209,6 +203,29 @@ const covidResultProcess = async (req, res) => {
 
     //res.send(req.body)
 }
+
+const paymentprocess = async (req, res) => {
+
+    const id = req.params.id
+        const { paymenteAmauntform, paymenteStatusform,currency } = req.body
+
+    console.log('ESTE ES EL ID ' + id)
+    console.log('CANTIDAD A PAGAR ' + paymenteAmauntform + ' ESTADO DEL PAGO ' + paymenteStatusform + " El tipo de moneda es: "+ currency)
+    try {
+        const dataorder = await Order.findOne({ _id: id })
+        dataorder.paymentAmaunt = paymenteAmauntform
+        dataorder.paymentStatus = paymenteStatusform
+        dataorder.currency = currency
+        await dataorder.save()
+        res.redirect(`/order/orderdetail/${id}`)
+
+    } catch (error) {
+        console.log(error)
+    }
+
+
+}
+
 const scanprocess = async (req, res) => {
 
     const id = req.params.id
@@ -235,27 +252,6 @@ const scanprocess = async (req, res) => {
 
 }
 
-const paymentprocess = async (req, res) => {
-
-    const id = req.params.id
-        const { paymenteAmauntform, paymenteStatusform,currency } = req.body
-
-    console.log('ESTE ES EL ID ' + id)
-    console.log('CANTIDAD A PAGAR ' + paymenteAmauntform + ' ESTADO DEL PAGO ' + paymenteStatusform + " El tipo de moneda es: "+ currency)
-    try {
-        const dataorder = await Order.findOne({ _id: id })
-        dataorder.paymentAmaunt = paymenteAmauntform
-        dataorder.paymentStatus = paymenteStatusform
-        dataorder.currency = currency
-        await dataorder.save()
-        res.redirect(`/order/orderdetail/${id}`)
-
-    } catch (error) {
-        console.log(error)
-    }
-
-
-}
 
 
 
