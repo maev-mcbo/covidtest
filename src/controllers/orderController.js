@@ -1,9 +1,8 @@
 const Order = require("../models/orders")
 const { validationResult } = require('express-validator')
 const qrcode = require("qrcode")
-const PDFDocument = require('pdfkit')
 const transport = require('../nodemailer/transport')
-const { ConsoleMessage } = require("puppeteer")
+require('dotenv').config();
 
 
 const readOrders = async (req, res) => {
@@ -176,20 +175,20 @@ const covidResultProcess = async (req, res) => {
         console.log('data guardada')
 
         let info = await transport.sendMail({
-            from: 'testmail@gmail.com',
+            from: 'sgpc.maracaibo@gmail.com',
             to: newcovidresult.mail,
             subject: 'resultado',
-            html: `<a href="${process.env.SCANURL + newcovidresult._id}">
+            html: `<a href="${process.env.SCANURL + newcovidresult.id}">
                      ver tu resultado aqui</a>`,
             attachments: [{
-                filename: `${newcovidresult._id + '_' + newcovidresult.fname + '_' + newcovidresult.lname}.pdf`,
-                path: `${process.env.SCANURL + newcovidresult._id}`
+                filename: `${newcovidresult.id + '_' + newcovidresult.fname + '_' + newcovidresult.lname}.pdf`,
+                path: `${process.env.SCANURL + id}`
             }
             ]
+            
         })
+
         console.log("Message sent: %s", info.messageId);
-
-
 
         req.flash('mensajes', [{ msg: `Resultado a sido cambiado a ${covidresulta} y correo enviado a ${newcovidresult.mail}` }])
 
