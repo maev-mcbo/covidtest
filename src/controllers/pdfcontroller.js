@@ -16,7 +16,7 @@ const pdfmaker = async (req, res) =>{
 
 const pdf = async (req, res) =>{
  const id = req.params.id
-const url = `http://localhost:5000/pdfmaker/${id}`
+const url = `${process.env.HEROPATH}/pdfmaker/${id}`
     const browser = await puppeteer.launch({
         headless: true,
         args: ['--no-sandbox','--disable-setuid-sandbox']
