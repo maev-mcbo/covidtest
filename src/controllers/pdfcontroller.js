@@ -21,9 +21,10 @@ const url = `${process.env.HEROPATH}pdfmaker/${id}`
         headless: true,
         args: ['--no-sandbox','--disable-setuid-sandbox']
     });
-    const webPage = await browser.newPage();
+    const incognito = await browser.createIncognitoBrowserContext();
+    const webPage = await incognito.newPage();
     await webPage.goto(url, {
-        waitUntil: "networkidle0",
+        waitUntil: "networkidle2",
     });
     
     const pdf = await webPage.pdf({

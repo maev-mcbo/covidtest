@@ -182,7 +182,7 @@ const covidResultProcess = async (req, res) => {
                      ver tu resultado aqui</a>`,
             attachments: [{
                 filename: `${newcovidresult.id + '_' + newcovidresult.fname + '_' + newcovidresult.lname}.pdf`,
-                path: `${process.env.SCANURL + id}`
+                path: `${process.env.SCANURL + newcovidresult.id}`
             }
             ]
             
