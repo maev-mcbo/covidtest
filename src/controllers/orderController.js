@@ -2,8 +2,6 @@ const Order = require("../models/orders")
 const { validationResult } = require('express-validator')
 const qrcode = require("qrcode")
 const transport = require('../nodemailer/transport')
-const accountSid = 'AC45d34eabf82b30bc1e499607ad1d853c'; 
-const authToken = '[Redacted]'; 
 const client = require('twilio')(process.env.ACCOUNTSID, process.env.AUTHTOKEN); 
 require('dotenv').config();
 
@@ -11,12 +9,10 @@ require('dotenv').config();
 const readOrders = async (req, res) => {
 
     const filtro = req.query.filter
-    // const id = req.query.id
     console.log('el filtro es: ' + filtro)
 
     switch (filtro) {
         case "all":
-           //console.log('pos')
             try {
                 const orders = await Order.find().lean();
                 orders.reverse()
@@ -26,9 +22,12 @@ const readOrders = async (req, res) => {
                 return res.redirect('orderlist')
             } break;
         case "pos":
-            //console.log('pos')
             try {
                 const orders = await Order.find({ testresult: "Positivo" }).lean();
+                console.log(orders.length);
+                
+                if(orders.length == 0) throw Error("No hay ordenes Positivas")
+                
                 orders.reverse()
                 console.log(orders);
                 res.render('orderlist', { orders });
@@ -38,9 +37,9 @@ const readOrders = async (req, res) => {
             } break;
 
         case "neg":
-            //console.log('neg')
             try {
                 const orders = await Order.find({ testresult: "Negativo" }).lean();
+                if(orders.length == 0) throw Error("No hay ordenes Negativas")
                 orders.reverse()
                 res.render('orderlist', { orders });
             } catch (error) {
@@ -48,9 +47,10 @@ const readOrders = async (req, res) => {
                 return res.redirect('orderlist')
             } break;
         case "pen":
-         //   console.log('pen')
             try {
                 const orders = await Order.find({ testresult: "pendiente" }).lean();
+                if(orders.length == 0) throw Error("No hay ordenes Pendientes")
+
                 orders.reverse()
                 res.render('orderlist', { orders });
             } catch (error) {
@@ -58,9 +58,10 @@ const readOrders = async (req, res) => {
                 return res.redirect('orderlist')
             } break;
         case "anulado":
-         console.log("Filtro seleecionado: "+ filtro)
             try {
                 const orders = await Order.find({ testresult: "Anulado" }).lean();
+                if(orders.length == 0) throw Error("No hay ordenes Anuladas")
+
                 orders.reverse()
                 res.render('orderlist', { orders });
             } catch (error) {
@@ -68,7 +69,6 @@ const readOrders = async (req, res) => {
                 return res.redirect('orderlist')
             } break;
         default:
-            console.log('today')
             try {
                 // const hoy = new Date().toISOString().split('T')[0]
                 // console.log(hoy)
@@ -76,14 +76,12 @@ const readOrders = async (req, res) => {
                 var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
                 console.log(startOfToday)
                 const orders = await Order.find({ createdAt: { $gte: startOfToday } }).lean()
+                if(orders.length == 0) throw Error("Aun no hay ordenes para hoy")
                 orders.reverse()
-                console.log(" hay " + orders.length + " ordenes");
-                // res.json(orders)
-                //console.log(orders);
                 res.render('orderlist', { orders });
             } catch (error) {
                 req.flash('mensajes', [{ msg: error.message }])
-                return res.redirect('orderlist')
+                return res.redirect('/order/orderlist?filter=all')
             }
 
             break;
@@ -176,6 +174,8 @@ const covidResultProcess = async (req, res) => {
         newcovidresult.testresult = covidresulta
         await newcovidresult.save()
         console.log('data guardada')
+
+        if(covidresulta == "Anulado") throw Error(`Orden Anulada Exitosamente`)
 
         let info = await transport.sendMail({
             from: 'sgpc.maracaibo@gmail.com',

@@ -38,16 +38,13 @@
    }
    
    #neworder:hover {
-    background-color: rgba(29, 201, 160, 0.08);
-    border-color: #1DC9A0;
-    color: #1DC9A0;
+
+  
     transform: translateY(-5px) scale(1.05);
    }
    
    #neworder:active {
-    background-color: transparent;
-    border-color: #1DC9A0;
-    color: #1DC9A0;
+
     transform: translateY(5px) scale(0.95);
    }
    
@@ -78,15 +75,12 @@
    
    #neworder1:hover {
     background-color: rgba(29, 201, 160, 0.08);
-    border-color: #1DC9A0;
-    color: #1DC9A0;
+
     transform: translateY(-5px) scale(1.05);
    }
    
    #neworder1:active {
-    background-color: transparent;
-    border-color: #1DC9A0;
-    color: #1DC9A0;
+
     transform: translateY(5px) scale(0.95);
    }
    

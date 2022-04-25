@@ -3,7 +3,7 @@
 <div class="d-md-flex justify-content-md-between ">
     <h1>Bandeja de ordenes
         <span class="badge bg-info text-wrap align-middle" style="font-size: medium;">
-            hay {{orders.length}} ordenes
+            Hay {{orders.length}} ordenes
         </span>
     </h1>
     <form action="/order/orderlist" method="get">
@@ -13,7 +13,7 @@
 
                 <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenufilter"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    filtrar
+                    Filtrar
                 </button>
                 <ul class="dropdown-menu p-2" aria-labelledby="dropdownMenufilter">
                     <li>
@@ -45,14 +45,14 @@
                         </label>
                     </li>
                     <li>
-                        <input class="form-check-input" name="filter"  type="radio" value="pen"
+                        <input class="form-check-input" name="filter" type="radio" value="pen"
                             onchange="this.form.submit()" id="pen">
                         <label class="form-check-label" for="pen">
                             Pendiente
                         </label>
                     </li>
                     <li>
-                        <input class="form-check-input" name="filter"  type="radio" value="anulado"
+                        <input class="form-check-input" name="filter" type="radio" value="anulado"
                             onchange="this.form.submit()" id="anulado">
                         <label class="form-check-label" for="anulado">
                             Anuladas
@@ -73,17 +73,17 @@
 
 {{#each orders }}
 {{> Order}}
-<a id="neworder" href="/order"><i class="fa-solid fa-plus"> </i> Nueva Orden </a>
+<a id="neworder" href="/order" class="shadow"><i class="fa-solid fa-plus "> </i> Nueva Orden </a>
 
 {{/each}}
 {{else}}
 
 
 <div class="container">
-    <div class="row justify-content-center aligh-items-center">
+    <div class="row  justify-content-center aligh-items-center">
         <div class="col-6">
             <h1> No hay ordenes, puedes crear una pulsando aqui. </h1>
-            <a id="neworder1" href="/order"><i class="fa-solid fa-plus"> </i> Crear orden </a>
+            <a class="shadow" id="neworder1" href="/order"><i class="fa-solid fa-plus"> </i> Crear orden </a>
         </div>
     </div>
 </div>
