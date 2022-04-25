@@ -1,5 +1,5 @@
 const { Router } = require('express')
-router = Router();
+const router = Router();
 const { body } = require('express-validator');
 
 const {
@@ -16,11 +16,7 @@ router.get('/login', loginOperatorForm)
 
 router.post('/login',[
     body('mail','Favor ingrese un correo valido')
-        .trim()
-        .escape()
-        .isEmail()
-        .normalizeEmail()
-        .notEmpty(),
+        .normalizeEmail(),
     body('password','La contraseña no es valida')
         .isLength({min: 6})
         .trim()

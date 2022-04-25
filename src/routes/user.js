@@ -11,7 +11,7 @@ const {readUsers,
         updateUserForm,
     } = require('../controllers/userControllers');
 
-router.get('/', readUsers);
+router.get('/',userisvalid, readUsers);
 
 router.get('/adduser', userisvalid, addUserForm);
 router.post('/adduser',[

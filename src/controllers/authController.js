@@ -13,17 +13,18 @@ const loginOperatorForm = (req, res) => {
 
 const loginOperatorProcess = async (req, res) => {
     
+    const {mail, password} =req.body
     const errors= validationResult(req)
+
+    console.log("REVISANDO ERRORES : "+ JSON.stringify(errors))
     if(!errors.isEmpty()){
         req.flash('mensajes', errors.array())
-        return res.redirect('login')
+        return res.redirect('/auth/login')
     }
     
-    const {mail, password} =req.body
-   // console.log('la contraseña es: ' +password )
     try {
         
-        const user = await operator.findOne({mail: mail})
+        const user = await operator.find({mail: mail})
         console.log('EL USUARIO ES: ' + user)
         if(!user) throw Error('El ususario no existe');
         if(!user.accountConfirm) throw Error('Por favor, revise su correo para activar la cuenta.');
@@ -38,8 +39,7 @@ const loginOperatorProcess = async (req, res) => {
     } catch (error) {
 
         req.flash('mensajes', [{msg: error.message}])
-        console.log('hay errores' + error );
-        return res.redirect('login')
+        return res.redirect('/auth/login')
        
     }
 }

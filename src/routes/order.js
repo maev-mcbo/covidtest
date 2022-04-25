@@ -6,13 +6,12 @@ const { orderFrom,
     readOrders,
     deleteOrder,
     covidResultProcess,
-    scanprocess,
     paymentprocess   } = require('../controllers/orderController');
 const userisvalid = require('../middlewares/userisvalid');
 
 router = Router();
 
-router.get('/',  orderFrom)
+router.get('/',userisvalid,  orderFrom)
 
 
 router.post('/', [
@@ -31,7 +30,7 @@ router.post('/', [
     body("airline ", "Seleccione una Aerolinea").notEmpty(),
     body("idf ", "Numero de vuelo no puede estar vacio").notEmpty(),
     body("departuredate ", "Seleccione una fecha de salida").notEmpty(),
-    body("arrivaldate ", "Seleccione una fecha de llegada").notEmpty(),], orderFromProcess)
+    body("arrivaldate ", "Seleccione una fecha de llegada").notEmpty(),],userisvalid, orderFromProcess)
 
 router.get('/orderlist/:filter?', userisvalid, readOrders)
 
