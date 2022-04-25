@@ -1,6 +1,9 @@
 const Order = require("../models/orders");
 
+const dashboardview = (req, res) =>{
+  res.redirect('dashboard');
 
+}
 const dashboard = async (req, res) => {
 
     const formater = new Intl.NumberFormat('en-US', {
@@ -46,5 +49,6 @@ const dashboard = async (req, res) => {
 
 
 module.exports = {
-    dashboard
+    dashboard,
+    dashboardview
 }

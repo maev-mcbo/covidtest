@@ -1,14 +1,12 @@
 const { Router } = require('express')
-const { dashboard } = require('../controllers/dasboardController')
+const { dashboard, dashboardview } = require('../controllers/dasboardController')
 const {pdf, pdfmaker} = require("../controllers/pdfcontroller")
+const userisvalid = require("../middlewares/userisvalid")
 router = Router();
-
-router.get('/', (req, res) => {
-     res.redirect('dashboard');
-});
+    
+router.get('/',userisvalid, dashboardview);
 
 router.get('/cs', (req, res) => {
-     
      const sesionactiva = req.session 
      res.json(sesionactiva)
 });

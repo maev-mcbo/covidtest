@@ -15,8 +15,7 @@ const loginOperatorProcess = async (req, res) => {
     
     const {mail, password} =req.body
     const errors= validationResult(req)
-
-    console.log("REVISANDO ERRORES : "+ JSON.stringify(errors))
+    console.log(req.body);
     if(!errors.isEmpty()){
         req.flash('mensajes', errors.array())
         return res.redirect('/auth/login')
@@ -24,7 +23,7 @@ const loginOperatorProcess = async (req, res) => {
     
     try {
         
-        const user = await operator.find({mail: mail})
+        const user = await operator.findOne({mail: mail})
         console.log('EL USUARIO ES: ' + user)
         if(!user) throw Error('El ususario no existe');
         if(!user.accountConfirm) throw Error('Por favor, revise su correo para activar la cuenta.');
@@ -33,7 +32,7 @@ const loginOperatorProcess = async (req, res) => {
         // crea la sesion del usuario 
         req.login(user, function(error){
             if (error) throw new Error('Error al crear la sesion');
-            return res.redirect('/order/orderlist')
+            return res.redirect('/')
         })
 
     } catch (error) {
@@ -82,13 +81,10 @@ const registerOperatorProcess = async (req, res) => {
         req.flash('mensajes', [{ msg: 'Revisa tu correo para activar tu cuenta' }])
         res.redirect('/auth/login' )
 
-
     } catch (error) {
         req.flash('mensajes', [{ msg: error.message }])
         return res.redirect('/auth/login')
     }
-
-
 }
 
 const confirmaccountprocess = async(req,res) =>{ 
@@ -100,10 +96,10 @@ const confirmaccountprocess = async(req,res) =>{
     }
 
     const {tokenConfirm} = req.params
-    //console.log('El token de la url es:' + tokenConfirm  )
+    console.log('El token de la url es:' + tokenConfirm  )
     try {
         const tokenConfirmExist = await operator.findOne({tokenConfirm: tokenConfirm})
-       // console.log('token encontrado en la BASE DE DATOS '+tokenConfirmExist)
+        console.log('token encontrado en la BASE DE DATOS '+tokenConfirmExist)
         if(!tokenConfirmExist) throw Error('no existe este usuario')
         
         tokenConfirmExist.accountConfirm = true
@@ -112,12 +108,12 @@ const confirmaccountprocess = async(req,res) =>{
         await tokenConfirmExist.save()
         req.flash('mensajes', [{ msg: "Bienvenido, tu cuenta se ha activado" }])
 
-        res.redirect('/order/orderlist')
+        res.redirect('/')
 
-      //  req.flash("mensajes", [{msg: "bienvenido"}]);
+       req.flash("mensajes", [{msg: "bienvenido"}]);
     } catch (error) {
         req.flash('mensajes', [{ msg: error.message }])
-        return res.redirect('/order/orderlist')
+        return res.redirect('/')
     }
     
 
