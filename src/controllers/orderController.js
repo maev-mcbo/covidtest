@@ -193,8 +193,7 @@ const covidResultProcess = async (req, res) => {
 
         console.log("Message sent: %s", info.messageId);
 
-        client.messages 
-      .create({ 
+        client.messages .create({ 
          body: `Su resultado esta listo, puede verlo en este enlace > ${process.env.SCANURL + newcovidresult.id}`, 
          from: 'whatsapp:+14155238886',       
          to: 'whatsapp:+584246207462',
@@ -238,31 +237,7 @@ const paymentprocess = async (req, res) => {
 
 }
 
-const scanprocess = async (req, res) => {
 
-    const id = req.params.id
-    const dataorder = await Order.findOne({ _id: id })
-    console.log('hola soy la data ' + dataorder)
-    const qrpdf = await qrcode.toDataURL(`${process.env.SCANURL + id}`)
-
-    const dob = dataorder.dob.slice(0, 4)
-    const hoy = new Date().getUTCFullYear()
-    const edad = hoy - dob
-    const pcrdesc = "Esta prueba PCR de COVID-19 detecta el material genético del virus mediante una técnica de laboratorio llamada reacción en cadena de la polimerasa."
-    const antigenodesc = 'Este prueba de Antigeno detecta, de manera rápida, mediante una muestra respiratoria, la presencia del antígeno para así poder determinar si tus síntomas son debidos a la infección por SARS-Cov-2.'
-    console.log("pruebas");
-    if (dataorder.testtype != 'pcr') {
-        console.log(' antigeno DESC')
-        var descripcion = antigenodesc
-    } else {
-        console.log('PCR DESCs ')
-        var descripcion = pcrdesc
-
-    }
-
-
-
-}
 
 
 
@@ -274,7 +249,6 @@ module.exports = {
     OrderDetailView,
     deleteOrder,
     covidResultProcess,
-    scanprocess,
     paymentprocess
 
 }

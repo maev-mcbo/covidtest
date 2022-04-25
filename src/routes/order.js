@@ -33,16 +33,15 @@ router.post('/', [
     body("departuredate ", "Seleccione una fecha de salida").notEmpty(),
     body("arrivaldate ", "Seleccione una fecha de llegada").notEmpty(),], orderFromProcess)
 
-router.get('/orderlist/:filter?',  readOrders)
+router.get('/orderlist/:filter?', userisvalid, readOrders)
 
-router.get('/orderdetail/:orderid', OrderDetailView)
+router.get('/orderdetail/:orderid', userisvalid,OrderDetailView)
 
-router.get('/deleteorder/:orderid', deleteOrder);
+router.get('/deleteorder/:orderid', userisvalid,deleteOrder);
 
-router.post('/covidresult/:id', covidResultProcess);
+router.post('/covidresult/:id', userisvalid,covidResultProcess);
 
-router.get('/scan/:id', scanprocess);
-router.post('/payment/:id', paymentprocess);
+router.post('/payment/:id',userisvalid, paymentprocess);
 
 module.exports = router;
 
