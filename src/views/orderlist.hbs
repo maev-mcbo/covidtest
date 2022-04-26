@@ -1,68 +1,60 @@
 {{#if orders}}
-
-<div class="d-md-flex justify-content-md-between ">
-    <h1>Bandeja de ordenes
-        <span class="badge bg-info text-wrap align-middle" style="font-size: medium;">
-            Hay {{orders.length}} ordenes
-        </span>
-    </h1>
-    <form action="/order/orderlist" method="get">
-        <div>
-            <div class="dropdown float-end d-md-flex ">
-
-
-                <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenufilter"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Filtrar
-                </button>
-                <ul class="dropdown-menu p-2" aria-labelledby="dropdownMenufilter">
-                    <li>
-                        <input class="form-check-input" name="filter" type="radio" value="today"
-                            onchange="this.form.submit()" id="today">
-                        <label class="form-check-label" for="today">
-                            Hoy
-                        </label>
-                    </li>
-                    <li>
-                        <input class="form-check-input" name="filter" type="radio" value="all"
-                            onchange="this.form.submit()" id="all">
-                        <label class="form-check-label" for="all">
-                            Todas
-                        </label>
-                    </li>
-                    <li>
-                        <input class="form-check-input" name="filter" value="pos" type="radio"
-                            onchange="this.form.submit()" id="pos">
-                        <label class="form-check-label" for="pos">
-                            Positivos
-                        </label>
-                    </li>
-                    <li>
-                        <input class="form-check-input" name="filter" value="neg" type="radio"
-                            onchange="this.form.submit()" id="neg">
-                        <label class="form-check-label" for="neg">
-                            Negativo
-                        </label>
-                    </li>
-                    <li>
-                        <input class="form-check-input" name="filter" type="radio" value="pen"
-                            onchange="this.form.submit()" id="pen">
-                        <label class="form-check-label" for="pen">
-                            Pendiente
-                        </label>
-                    </li>
-                    <li>
-                        <input class="form-check-input" name="filter" type="radio" value="anulado"
-                            onchange="this.form.submit()" id="anulado">
-                        <label class="form-check-label" for="anulado">
-                            Anuladas
-                        </label>
-                    </li>
-                </ul>
-            </div>
-    </form>
+<div class="container">
+    <div class="row  align-items-center">
+        <div class="col-md pb-3">
+            <h1>Bandeja de ordenes </h1>
+            <span class="badge bg-info text-wrap align-middle" style="font-size: medium;">
+                Hay {{orders.length}} ordenes
+            </span>
+        </div>
+        <div class="col-md form-control ">
+            <form class="row row-cols-lg-auto g-3 align-items-center" class="form-control" action="/order/orderlist"
+                method="get">
+                <div class="col">
+                    <div class="form-floating">
+                        <input class="form-control text-muted" type="date" name="startdate" id="startdate">
+                        <label for="startdate">Desde: </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input class="form-control text-muted" type="date" name="enddate" id="enddate">
+                        <label for="enddate">Desde: </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <select name="filter" class="form-control" id="filter">
+                            <option value="today" selected>Hoy</option>
+                            <option value="all"> Todas</option>
+                            <option value="pos"> Positivas</option>
+                            <option value="neg"> Negativas</option>
+                            <option value="anulado"> Anuladas</option>
+                            <option value="pen"> Pendientes</option>
+                        </select>
+                        <label for="filter">Filtro</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <button class="btn btn-info text-white" type="submit">Buscar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-</div>
+
+<script>
+    startdate.value = new Date().toISOString().slice(0, -14);
+    enddate.value = new Date().toISOString().slice(0, -14);
+
+</script>
+
+
+
+
+
+
+
 
 
 <!-- Example single danger button -->

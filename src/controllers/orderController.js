@@ -12,11 +12,16 @@ const readOrders = async (req, res) => {
     const filtro = req.query.filter
     console.log('el filtro es: ' + filtro)
 
+    const inicio = req.query.startdate
+    const fin= req.query.enddate
+
+    console.log("Rango de busqueda: " + inicio + " hasta " + fin  );
     switch (filtro) {
         case "all":
             try {
                 const orders = await Order.find().lean();
                 orders.reverse()
+                console.log(orders.length);
                 res.render('orderlist', { orders });
             } catch (error) {
                 req.flash('mensajes', [{ msg: error.message }])
@@ -69,23 +74,41 @@ const readOrders = async (req, res) => {
                 req.flash('mensajes', [{ msg: error.message }])
                 return res.redirect('orderlist')
             } break;
-        default:
+            case "today" :
+        
             try {
                 // const hoy = new Date().toISOString().split('T')[0]
                 // console.log(hoy)
                 var now = new Date();
                 var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
                 console.log(startOfToday)
-                const orders = await Order.find({ createdAt: { $gte: startOfToday } }).lean()
+                const orders = await Order.find({ createdAt: { $gte: startOfToday}}).lean()
                 if(orders.length == 0) throw Error("Aun no hay ordenes para hoy")
                 orders.reverse()
+                console.log(orders)
                 res.render('orderlist', { orders });
             } catch (error) {
                 req.flash('mensajes', [{ msg: error.message }])
-                return res.redirect('/order/orderlist?filter=all')
+                return res.redirect('/order/orderlist')
             }
 
             break;
+            default:
+                try {
+                    
+                    // const hoy = new Date().toISOString().split('T')[0]
+                     console.log("default")
+                    const orders = await Order.find({ createdAt: { $gt: inicio , $lt: fin} }).lean()
+                     if(orders.length == 0) throw Error("no se encontro nada en ese rango de fechas")
+                    orders.reverse()
+                    console.log(orders.length)
+                    res.render('orderlist', { orders });
+                } catch (error) {
+                    req.flash('mensajes', [{ msg: error.message }])
+                    return res.redirect('/order/orderlist?filter=all')
+                }
+                break;
+
     }
 
 }

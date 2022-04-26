@@ -32,7 +32,7 @@ router.post('/', [
     body("departuredate ", "Seleccione una fecha de salida").notEmpty(),
     body("arrivaldate ", "Seleccione una fecha de llegada").notEmpty(),],userisvalid, orderFromProcess)
 
-router.get('/orderlist/:filter?', userisvalid, readOrders)
+router.get('/orderlist/:filter?:startdate?:enddate?', userisvalid, readOrders)
 
 router.get('/orderdetail/:orderid', userisvalid,OrderDetailView)
 
