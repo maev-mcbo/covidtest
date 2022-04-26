@@ -14,7 +14,7 @@
 </head>
 
 <body
-    class="text-uppercase fw-bold d-xxl-flex justify-content-center align-items-center align-self-center mx-auto justify-content-xxl-center align-items-xxl-center"
+    class="text-uppercase d-xxl-flex justify-content-center align-items-center align-self-center mx-auto justify-content-xxl-center align-items-xxl-center"
     style="background: url(&quot;/assets/img/svg.png&quot;) bottom / cover space, #ffffff;height: 100vh;width: 100vw;">
     <div class="container-fluid pe-5 ps-5 ">
         <div class="row">
@@ -29,7 +29,7 @@
             <div class="position-relative" >
                 <div class="position-absolute top-50 start-50 translate-middle text-warp">
                     <h1 class="badge bg-danger shadow text-wrap progress-bar progress-bar-striped fs-1" style="color: rgb(255, 255, 255);   transform: rotate(-45deg); margin-top: 75% ">
-                        CADUCADO / EXPIRED
+                        CADUCADO  EXPIRED
                     </h1>
                 </div>
             </div>
@@ -49,12 +49,14 @@
                 </p>
             </div>
             <div class="col-md-6 pt-2 text-end"
-                style="border-radius: 27px;border-style: dotted;padding: 13px;height: 260px;    margin-top: 20px">
+                style="border-radius: 27px;border-style: dotted;padding: 13px;height: 270px;    margin-top: 20px">
                 <div class="row">
                     <div class="col">
-                        <p style="margin-bottom: -20px;">DESCRIPCIÓN DEL EXAMEN / EXAM
+                        <div style="margin-bottom: -20px;">
+                            
+                            <p>DESCRIPCIÓN DEL EXAMEN / EXAM
                             DESCRIPTION<br>SARS-CoV2<br>TIPO DE EXAMEN / SAMPLE TYPE<br>Hisopado Nasofaríngeo /
-                            Nasopharyngeal Swab<br>
+                            Nasopharyngeal Swab<br></p>
 
                             {{#iseq data.testtype "pcr"}}
                             PCR Molecular / Molecular PCR
@@ -66,8 +68,8 @@
 
 
                             <br><br>
-                        </p>
-                        <p style="margin-bottom: -19px;">RESULTADO / RESULT</p>
+                        </div>
+                        <p style="margin-bottom: -20px;">RESULTADO / RESULT</p>
                         <span style="font-size: 45px;margin-top: 10px;" class="text-uppercase">
 
                             {{#iseq data.testresult "Negativo"}}
