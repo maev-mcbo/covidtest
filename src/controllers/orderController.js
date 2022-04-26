@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator')
 const qrcode = require("qrcode")
 const transport = require('../nodemailer/transport')
 const client = require('twilio')(process.env.ACCOUNTSID, process.env.AUTHTOKEN); 
+
 require('dotenv').config();
 
 
@@ -125,7 +126,7 @@ const OrderDetailView = async (req, res) => {
     try {
         const ordendata = await Order.find({ _id: id }).lean();
 
-        res.render("orderdetail", { ordendata })
+        res.render("orderdetail", { ordendata  })
     }
     catch (error) {
         console.log('error ' + error)

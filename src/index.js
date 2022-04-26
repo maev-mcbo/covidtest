@@ -8,7 +8,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const path = require("path");
 const operator = require('./models/operators')
 const passport = require('passport')
-const { create } = require('express-handlebars');
+const hbs1 = require('express-handlebars');
 const csrf = require('csurf');
 require('dotenv').config()
 const clientDB = require('./database/db')
@@ -60,17 +60,26 @@ passport.deserializeUser(async (user, done) => {
 // Settings
 const PORT = process.env.PORT || 5000
 
-const hbs = create({
+
+//handlebar helper
+const iseq = function(a, b, opts) {
+    if (a == b) {
+      return opts.fn(this) 
+    } else { 
+      return opts.inverse(this) 
+    } 
+  }
+
+const hbs = hbs1.create({
     extname: '.hbs',
     partialsDir: [
         path.join(__dirname, 'views/components')
     ],
     helpers: {
-        ifEquals: function (arg1, arg2, options) {
-            return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-        }
+        iseq: iseq
     }
 });
+
 
 
 // Middlewares

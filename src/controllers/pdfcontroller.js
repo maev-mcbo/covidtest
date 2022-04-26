@@ -27,7 +27,7 @@ const pdfmaker = async (req, res) =>{
     data.age = getAge(dob)
     
 
-    console.log(data);
+    console.log(data.testresult);
     res.render("pdf",{data, layout: 'clean'})
 
 
