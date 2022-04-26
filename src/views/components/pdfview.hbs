@@ -19,10 +19,21 @@
     <div class="container-fluid pe-5 ps-5 ">
         <div class="row">
             <div class="col-md-6 col-xl-9"><img src="/assets/img/image-removebg-preview%20(1).png"
-                    style="width: 400px;height: 95px;margin-top: 10px;"></div>
+                    style="width: 400px;height: 95px;margin-top: 10px;">
+            </div>
             <div class="col-md-6 col-xl-3">
                 <div id="qrcode" style="float: right; padding-top: 20px" class="m-2"></div>
             </div>
+            
+            {{#iseq data.expired "1"}}
+            <div class="position-relative" >
+                <div class="position-absolute top-50 start-50 translate-middle text-warp">
+                    <h1 class="badge bg-danger shadow text-wrap progress-bar progress-bar-striped fs-1" style="color: rgb(255, 255, 255);   transform: rotate(-45deg); margin-top: 75% ">
+                        CADUCADO / EXPIRED
+                    </h1>
+                </div>
+            </div>
+            {{/iseq}}
         </div>
         <div class="row">
             <div class="col-md-6 ">
@@ -38,7 +49,7 @@
                 </p>
             </div>
             <div class="col-md-6 pt-2 text-end"
-                style="border-radius: 27px;border-style: dotted;padding: 13px;height: 220px;    margin-top: 20px">
+                style="border-radius: 27px;border-style: dotted;padding: 13px;height: 260px;    margin-top: 20px">
                 <div class="row">
                     <div class="col">
                         <p style="margin-bottom: -19px;">DESCRIPCIÓN DEL EXAMEN / EXAM
@@ -57,8 +68,7 @@
                             <br><br>
                         </p>
                         <p style="margin-bottom: -19px;">RESULTADO / RESULT</p>
-                        <span
-                            style="font-size: 45px;margin-top: 10px;" class="text-uppercase">
+                        <span style="font-size: 45px;margin-top: 10px;" class="text-uppercase">
 
                             {{#iseq data.testresult "Negativo"}}
                             <h1 style="margin-top: 15px;"> <i class="fa fa-minus"> </i> NEGATIVO </h1>
@@ -67,31 +77,41 @@
                             {{#iseq data.testresult "Positivo"}}
                             <h1 style="margin-top: 15px;color: red"><i class="fa fa-plus"> </i> POSITIVO</h1>
                             {{/iseq}}
+                            {{#iseq data.testresult "pendiente"}}
+                            <h1 style="margin-top: 15px;color: rgb(91, 91, 91)" ></i> PENDIENTE</h1>
+                            {{/iseq}}
                         </span>
+                        <p style="text-align: right; font-size: 13px;">FECHA DEL EXAMEN / SAMPLE RUN <br>
+                        <span>{{data.fecha}} {{data.hora}} </span>
+                        </p>
+
                     </div>
                 </div>
-                <p style="text-align: right; font-size: 13px;"><br>DESCRIPCIÓN DEL EXAMEN / TEST DESCRIPTION<br>
+                <div style="text-align: right; font-size:small">
+                    <p>DESCRIPCIÓN DEL EXAMEN / TEST DESCRIPTION</p>
                     {{#iseq data.testtype "pcr"}}
-                    Se realizó detección de
+                    <p style="text-align: right; font-size:x-small">
+                        Se realizó detección de
                     SARS-CoV2, mediante amplificación isotérmica en termociclador para PCR en tiempo real, utilizando
                     indicadores específicos para la región conservada Nsp15 .que codifica una proteína no estructural
-                    con actividad endoribonucleasa<br>&nbsp; Detection of SARS-CoV2, was performed by isothermal
+                    con actividad endoribonucleasa<br><br> Detection of SARS-CoV2, was performed by isothermal
                     amplification in a real-time PCR thermocycler, using specific primers for the conserved region
                     Nsp15, which encodes a non-structural protein with endoribonuclease activity<br>
+                    </P>
                     {{/iseq}}
                     {{#iseq data.testtype "antigeno"}}
-                    Se realizó test para la determinación cualitativa de antígenos para el SARS-CoV-2, virus que causa
+                    <p style="text-align: right; font-size:x-small">
+                        Se realizó test para la determinación cualitativa de antígenos para el SARS-CoV-2, virus que causa
                     el COVID-19 (coronavirus del síndrome respiratorio agudo severo 2) en muestra de hisopo
-                    nasofaríngeo. Solo para diagnóstico in vitro. Bajo metodología inmunocromatografía.
+                    nasofaríngeo. Solo para diagnóstico in vitro. Bajo metodología inmunocromatografía.<br><br>
                     Tests were performed for the qualitative determination of antigens for SARS-CoV-2, a virus that
                     causes COVID-19 (severe acute respiratory syndrome coronavirus) in a nasopharyngeal swab sample.
                     Only for in vitro diagnosis.
                     Under immunochromatography methodology.
+                    </P>
                     {{/iseq}}
-
-
-                </p>
-                <p style="text-align: right;"><img src="/assets/img/image-removebg-preview.png"
+                </div>
+                <p style="text-align: right;margin-top: 20px"><img src="/assets/img/image-removebg-preview.png"
                         style="width: 161px;height: 95px;"><br>Dr. Bad Bunny</p>
             </div>
         </div>
